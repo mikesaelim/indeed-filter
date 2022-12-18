@@ -1,4 +1,5 @@
 .idea
+src/main/resources/static/*
 
 # Created by https://www.toptal.com/developers/gitignore/api/java,gradle
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,gradle
