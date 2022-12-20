@@ -1,6 +1,7 @@
 package io.github.mikesaelim.indeedfilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,11 +14,11 @@ public class JobController {
     JobRepository jobRepository;
 
     /**
-     * Return all the jobs in the database, sorted by jobkey.  // TODO sort by pubDate desc?
+     * Return all the jobs in the database, sorted by most recent pubDate first.
      */
     @GetMapping("/jobs")
     List<Job> listJobs() {
-        return jobRepository.findAll();
+        return jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey")));
     }
 
 }
