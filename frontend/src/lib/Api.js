@@ -1,5 +1,18 @@
 const Api = {
-  listJobs: async () => { // TODO: real fetch client
+  listJobs: async () => {
+    return fetch("/jobs")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+        return response.json();
+      });
+  }
+};
+
+// For local development
+const MockApi = {
+  listJobs: async () => {
     return [
       {
         "jobkey": "05bd10b8d9548b2b",
@@ -133,4 +146,5 @@ const Api = {
   }
 };
 
-export default Api;
+const apiObject = process.env.NODE_ENV === "production" ? Api : MockApi;
+export default apiObject;

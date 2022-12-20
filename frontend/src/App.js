@@ -9,7 +9,9 @@ function App() {
 
   useEffect(() => {
     // TODO: loading overlay
-    Api.listJobs().then(results => setJobs(results));
+    Api.listJobs()
+      .then(results => setJobs(results))
+      .catch(err => console.log(err));
   }, []);
 
   return (
