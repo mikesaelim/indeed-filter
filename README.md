@@ -32,3 +32,9 @@ Run tests with
 ```
 ./gradlew clean test
 ```
+
+This repo now manages the `indeed` database schema with [Flyway](https://flywaydb.org/).  Migration scripts are located
+in `src/main/resources/db/migration` and you can manually kick off the migrations with
+```
+./gradlew flywayMigrate
+```
