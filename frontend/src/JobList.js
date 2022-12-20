@@ -1,4 +1,9 @@
+import { DateTime } from "luxon";
+
 import "./JobList.css";
+
+const TODAY = DateTime.local().startOf("day");
+const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat();
 
 function JobList(props) {
   return (
@@ -32,10 +37,21 @@ function JobCard(props) {
         <h6 className="card-subtitle text-truncate">{j.company}</h6>
       </div>
       <div className="card-footer">
-        <small className="text-muted">Posted {j.formattedRelativeTime}</small>
+        <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
       </div>
     </div>
   );
+}
+
+function timeAgo(pubDate) {
+  const days = DateTime.fromISO(pubDate).diff(TODAY, "days").days;
+  if (days === 0) {
+    return "today";
+  } else if (days < -30) {
+    return "30+ days ago";
+  } else {
+    return RELATIVE_TIME_FORMAT.format(days, "day");
+  }
 }
 
 export default JobList;
