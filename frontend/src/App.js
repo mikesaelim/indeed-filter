@@ -1,23 +1,23 @@
-import logo from "./logo.svg";
+import { useEffect, useState } from "react";
 import "./App.css";
 
+import Api from "./lib/Api";
+import JobList from "./JobList";
+
 function App() {
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    // TODO: loading overlay
+    Api.listJobs().then(results => setJobs(results));
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="content mx-auto">
+        <div className="m-4 text-center">insert header here</div>
+        <JobList jobs={jobs} />
+      </div>
     </div>
   );
 }
