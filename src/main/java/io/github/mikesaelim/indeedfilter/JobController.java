@@ -16,7 +16,7 @@ public class JobController {
     /**
      * Return all the jobs in the database, sorted by most recent pubDate first.
      */
-    @GetMapping("/jobs")
+    @GetMapping("/api/jobs")
     List<Job> listJobs() {
         return jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey")));
     }

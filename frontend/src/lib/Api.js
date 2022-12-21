@@ -1,6 +1,6 @@
 const Api = {
   listJobs: async () => {
-    return fetch("/jobs")
+    return fetch("/api/jobs")
       .then(response => {
         if (!response.ok) {
           throw new Error("Response was " + response.status);
