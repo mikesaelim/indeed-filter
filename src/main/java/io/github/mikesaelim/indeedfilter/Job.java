@@ -12,19 +12,19 @@ import java.time.LocalDate;
 @Data
 public class Job {
     @Id
-    String jobkey;
+    private String jobkey;
 
-    String title;
-    String company;
-    String companyIdEncrypted;
-    String viewJobLink;
-    Boolean expired;
-    LocalDate pubDate;
-    String jobLocationCity;
-    String jobLocationState;
-    String jobLocationPostal;
-    String jobLocationExtras;
-    String formattedLocation;
-    String formattedRelativeTime;
-    String snippet;
+    private String title;
+    private String company;
+    private String companyIdEncrypted;
+    private String viewJobLink;
+    private Boolean expired;
+    private LocalDate pubDate;
+    private String jobLocationCity;
+    private String jobLocationState;
+    private String jobLocationPostal;
+    private String jobLocationExtras;
+    private String formattedLocation;
+    private String formattedRelativeTime;
+    private String snippet;
 }
