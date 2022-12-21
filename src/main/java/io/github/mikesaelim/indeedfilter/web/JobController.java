@@ -1,5 +1,7 @@
-package io.github.mikesaelim.indeedfilter;
+package io.github.mikesaelim.indeedfilter.web;
 
+import io.github.mikesaelim.indeedfilter.persistence.Job;
+import io.github.mikesaelim.indeedfilter.persistence.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;

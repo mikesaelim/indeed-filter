@@ -1,5 +1,7 @@
-package io.github.mikesaelim.indeedfilter;
+package io.github.mikesaelim.indeedfilter.web;
 
+import io.github.mikesaelim.indeedfilter.persistence.HiddenCompany;
+import io.github.mikesaelim.indeedfilter.persistence.HiddenCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;

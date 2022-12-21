@@ -1,4 +1,4 @@
-package io.github.mikesaelim.indeedfilter;
+package io.github.mikesaelim.indeedfilter.persistence;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
