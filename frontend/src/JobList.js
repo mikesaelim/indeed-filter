@@ -1,4 +1,7 @@
 import { DateTime } from "luxon";
+import Card from "react-bootstrap/Card";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 import "./JobList.css";
 
@@ -8,17 +11,15 @@ const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat();
 function JobList(props) {
   return (
     <div className="jobs my-2 mx-auto">
-      <div className="row row-cols-1 row-cols-md-2 g-4">
+      <Row xs={1} md={2} className="g-4">
         {
-          props.jobs.map(job => {
-            return (
-              <div className="col" key={job.jobkey}>
-                <JobCard job={job} />
-              </div>
-            );
-          })
+          props.jobs.map(job => (
+            <Col key={job.jobkey}>
+              <JobCard job={job} />
+            </Col>
+          ))
         }
-      </div>
+      </Row>
     </div>
   );
 }
@@ -27,19 +28,19 @@ function JobCard(props) {
   const j = props.job;
 
   return (
-    <div className="card h-100">
-      <div className="card-body">
-        <h5 className="card-title text-truncate">
+    <Card className="h-100">
+      <Card.Body>
+        <Card.Title className="text-truncate">
           <a href={`https://www.indeed.com${j.viewJobLink}`} target="_blank" rel="noreferrer">
             {j.title}
           </a>
-        </h5>
-        <h6 className="card-subtitle text-truncate">{j.company}</h6>
-      </div>
-      <div className="card-footer">
+        </Card.Title>
+        <Card.Subtitle className="text-truncate">{j.company}</Card.Subtitle>
+      </Card.Body>
+      <Card.Footer>
         <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
-      </div>
-    </div>
+      </Card.Footer>
+    </Card>
   );
 }
 
