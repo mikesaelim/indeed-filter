@@ -4,6 +4,7 @@ import io.github.mikesaelim.indeedfilter.persistence.Job;
 import io.github.mikesaelim.indeedfilter.persistence.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,8 @@ public class JobController {
      * Return all the jobs in the database, sorted by most recent pubDate first.
      */
     @GetMapping("/api/jobs")
-    List<Job> listJobs() {
-        return jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey")));
+    ResponseEntity<List<Job>> listJobs() {
+        return ResponseEntity.ok(jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey"))));
     }
 
 }

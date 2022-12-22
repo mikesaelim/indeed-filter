@@ -5,6 +5,7 @@ import io.github.mikesaelim.indeedfilter.persistence.HiddenCompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class HiddenCompanyController {
      * Return all the hidden companies, sorted by name
      */
     @GetMapping("/api/hidden-companies")
-    List<HiddenCompany> listCompanies() {
-        return hiddenCompanyRepository.findAll(Sort.by("name"));
+    ResponseEntity<List<HiddenCompany>> listCompanies() {
+        return ResponseEntity.ok(hiddenCompanyRepository.findAll(Sort.by("name")));
     }
 
     /**
@@ -34,10 +35,12 @@ public class HiddenCompanyController {
         }
 
         try {
-            return ResponseEntity.ok(hiddenCompanyRepository.save(company));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(hiddenCompanyRepository.save(company));
         } catch (DataIntegrityViolationException e) {
             // This probably means the company is already hidden
-            return ResponseEntity.ok(hiddenCompanyRepository.findByName(company.getName()));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(hiddenCompanyRepository.findByName(company.getName()));
         }
     }
 
@@ -45,8 +48,9 @@ public class HiddenCompanyController {
      * Delete a record for hiding a company.  Idempotent.
      */
     @DeleteMapping("/api/hidden-companies/{id}")
-    void unhideCompany(@PathVariable Integer id) {
+    ResponseEntity<Void> unhideCompany(@PathVariable Integer id) {
         hiddenCompanyRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
