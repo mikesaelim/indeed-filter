@@ -181,6 +181,7 @@ const MockApi = {
     ];
   },
   hideCompany: async (name) => {
+    alert(`Company ${name} is hidden!`);
     return { "id": 23, "name": name };
   },
   unhideCompany: async (id) => {
