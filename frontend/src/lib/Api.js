@@ -7,6 +7,35 @@ const Api = {
         }
         return response.json();
       });
+  },
+  listHiddenCompanies: async () => {
+    return fetch("/api/hidden-companies")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+        return response.json();
+      });
+  },
+  hideCompany: async (name) => {
+    return fetch("/api/hidden-companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ "name": name }),
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error("Response was " + response.status);
+      }
+      return response.json();
+    });
+  },
+  unhideCompany: async (id) => {
+    return fetch("/api/hidden-companies/" + id, { method: "DELETE" })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+      });
   }
 };
 
@@ -143,6 +172,19 @@ const MockApi = {
         "snippet": "<ul style=\"list-style-type:circle;margin-top: 0px;margin-bottom: 0px;padding-left:20px;\"> \n <li>Knowledge of various enterprise applications and IT services, as well as <b>software</b> development, compliance and security, and IT operations disciplines.</li>\n</ul>"
       }
     ];
+  },
+  listHiddenCompanies: async () => {
+    return [
+      { "id": 14, "name": "Citadel" },
+      { "id": 5, "name": "Palantir" },
+      { "id": 8, "name": "Twitter" }
+    ];
+  },
+  hideCompany: async (name) => {
+    return { "id": 23, "name": name };
+  },
+  unhideCompany: async (id) => {
+    alert(`Company ${id} is unhidden!`);
   }
 };
 
