@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
 
-import Api from "./lib/Api";
-import JobList from "./JobList";
+import "./App.css";
+import CompaniesPage from "./CompaniesPage";
+import JobsPage from "./JobsPage";
+
+// React-router seems a little overkill for managing just two pages,
+// but I may use it in the future.
+const ROUTES = {
+  "Jobs": {
+    pageComponent: <JobsPage />,
+    otherPage: "Companies"
+  },
+  "Companies": {
+    pageComponent: <CompaniesPage />,
+    otherPage: "Jobs"
+  }
+};
 
 function App() {
-  const [jobs, setJobs] = useState([]);
-
-  useEffect(() => {
-    // TODO: loading overlay
-    Api.listJobs()
-      .then(results => setJobs(results))
-      .catch(err => console.log(err));
-  }, []);
+  const [page, setPage] = useState("Jobs");
 
   return (
     <div className="App">
       <div className="content mx-auto">
-        <div className="m-4 text-center">insert header here</div>
-        <JobList jobs={jobs} />
+        <div className="m-2 text-end">
+          <Button variant="outline-primary" size="sm" onClick={() => setPage(ROUTES[page].otherPage)}>
+            { ROUTES[page].otherPage }
+          </Button>
+        </div>
+        { ROUTES[page].pageComponent }
       </div>
     </div>
   );
