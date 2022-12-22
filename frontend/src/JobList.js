@@ -1,7 +1,9 @@
 import { DateTime } from "luxon";
+import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Stack from "react-bootstrap/Stack";
 
 import "./JobList.css";
 
@@ -38,7 +40,16 @@ function JobCard(props) {
         <Card.Subtitle className="text-truncate">{j.company}</Card.Subtitle>
       </Card.Body>
       <Card.Footer>
-        <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
+        <Stack direction="horizontal" gap={3}>
+          <div>
+            <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
+          </div>
+          <div className="ms-auto">
+            <Button variant="light" size="sm" style={{"--bs-btn-padding-y": 0}}>
+              <i className="bi bi-eye-slash" />
+            </Button>
+          </div>
+        </Stack>
       </Card.Footer>
     </Card>
   );
