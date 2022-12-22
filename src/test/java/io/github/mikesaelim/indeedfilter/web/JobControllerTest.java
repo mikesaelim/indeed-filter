@@ -33,9 +33,25 @@ class JobControllerTest {
 
     @Test
     void testListJobs() throws Exception {
-        when(jobRepository.findAll(any(Sort.class))).thenReturn(JOBS);
+        when(jobRepository.findAllExcludingHiddenCompanies()).thenReturn(JOBS);
 
         mockMvc.perform(get("/api/jobs")).andExpectAll(
+                status().isOk(),
+                jsonPath("length($)").value(2),
+                jsonPath("$[0].jobkey").value("a1"),
+                jsonPath("$[0].title").value("White Rook"),
+                jsonPath("$[0].company").value("Chess.com"),
+                jsonPath("$[1].jobkey").value("b2"),
+                jsonPath("$[1].title").value("White Pawn"),
+                jsonPath("$[1].company").value("Lichess")
+        );
+    }
+
+    @Test
+    void testListJobsAll() throws Exception {
+        when(jobRepository.findAll(any(Sort.class))).thenReturn(JOBS);
+
+        mockMvc.perform(get("/api/jobs?all=1")).andExpectAll(
                 status().isOk(),
                 jsonPath("length($)").value(2),
                 jsonPath("$[0].jobkey").value("a1"),
