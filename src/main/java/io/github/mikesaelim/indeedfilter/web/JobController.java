@@ -22,12 +22,17 @@ public class JobController {
      * If the query parameter "?all" is set to a truthy value, it returns all jobs in the database.
      */
     @GetMapping("/api/jobs")
-    ResponseEntity<List<Job>> listJobs(@RequestParam(defaultValue = "false") Boolean all) {
+    ResponseEntity<JobList> listJobs(@RequestParam(defaultValue = "false") Boolean all) {
+        Long totalJobCount = jobRepository.count();
+
+        List<Job> jobs;
         if (all) {
-            return ResponseEntity.ok(jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey"))));
+            jobs = jobRepository.findAll(Sort.by(Sort.Order.desc("pubDate"), Sort.Order.asc("jobkey")));
         } else {
-            return ResponseEntity.ok(jobRepository.findAllExcludingHiddenCompanies());
+            jobs = jobRepository.findAllExcludingHiddenCompanies();
         }
+
+        return ResponseEntity.ok(new JobList(totalJobCount, jobs));
     }
 
 }

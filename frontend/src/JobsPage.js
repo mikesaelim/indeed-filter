@@ -9,7 +9,7 @@ function JobsPage() {
   useEffect(() => {
     // TODO: loading overlay?
     Api.listJobs()
-      .then(results => setJobs(results))
+      .then(results => setJobs(results.jobs))
       .catch(err => console.log(err));
   }, []);
 
