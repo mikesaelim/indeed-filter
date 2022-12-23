@@ -2,8 +2,8 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 
 import "./App.css";
-import CompaniesPage from "./CompaniesPage";
-import JobsPage from "./JobsPage";
+import CompaniesPage from "./companies/CompaniesPage";
+import JobsPage from "./jobs/JobsPage";
 
 // React-router seems a little overkill for managing just two pages,
 // but I may use it in the future.

@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import "./CompaniesPage.css";
-import Api from "./lib/Api";
+import Api from "../lib/Api";
 
 function CompaniesPage() {
   const [companies, setCompanies] = useState([]);

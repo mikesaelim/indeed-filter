@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import Api from "./lib/Api";
+import Api from "../lib/Api";
 import JobList from "./JobList";
 
 function JobsPage() {
