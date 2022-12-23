@@ -1,22 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import ApiContext from "../lib/ApiContext";
 
 import "./CompaniesPage.css";
-import Api from "../lib/Api";
 
 function CompaniesPage() {
   const [companies, setCompanies] = useState([]);
   const [newCompanyName, setNewCompanyName] = useState("");
+  const api = useContext(ApiContext);
 
-  useEffect(loadCompanies, []);
+  useEffect(loadCompanies, [api]);
 
   function loadCompanies() {
-    Api.listHiddenCompanies()
+    api.listHiddenCompanies()
       .then(results => setCompanies(results))
       .catch(err => console.log(err));
   }
@@ -26,14 +27,14 @@ function CompaniesPage() {
     if (newCompanyName == null || newCompanyName.trim() === "") {
       return;
     }
-    Api.hideCompany(newCompanyName.trim())
+    api.hideCompany(newCompanyName.trim())
       .then(loadCompanies)
       .then(setNewCompanyName(""))
       .catch(err => console.log(err));
   }
 
   function unhideCompany(id) {
-    Api.unhideCompany(id)
+    api.unhideCompany(id)
       .then(loadCompanies)
       .catch(err => console.log(err));
   }
