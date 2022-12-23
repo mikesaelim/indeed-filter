@@ -1,5 +1,7 @@
 # indeed-filter
 
+![Hide a company](docs/hide_company.gif)
+
 Indeed doesn't allow users to filter out job listings by company, so I'm gonna do it myself.
 
 This is a [Spring Boot](https://spring.io/projects/spring-boot) app that serves a REST API and a 
