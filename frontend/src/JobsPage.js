@@ -17,12 +17,20 @@ function JobsPage() {
       .catch(err => console.log(err));
   }, []);
 
+  function hideCompany(name) {
+    const newJobs = jobs.map(job => (job.company === name) ? {...job, hidden: true} : job);
+    setJobs(newJobs);
+
+    Api.hideCompany(name)
+      .catch(err => console.log(err));
+  }
+
   return (
     <div className="JobsPage">
       <div className="m-4">
         <h4>Showing {jobs.length} of {totalJobCount} jobs...</h4>
       </div>
-      <JobList jobs={jobs} />
+      <JobList jobs={jobs} hideCompany={hideCompany} />
     </div>
   );
 }

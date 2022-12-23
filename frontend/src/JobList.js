@@ -17,7 +17,7 @@ function JobList(props) {
         {
           props.jobs.map(job => (
             <Col key={job.jobkey}>
-              <JobCard job={job} />
+              <JobCard job={job} hideCompany={() => props.hideCompany(job.company)} />
             </Col>
           ))
         }
@@ -30,7 +30,7 @@ function JobCard(props) {
   const j = props.job;
 
   return (
-    <Card className="h-100">
+    <Card className={`h-100 ${j.hidden && "opacity-25"}`}>
       <Card.Body>
         <Card.Title className="text-truncate">
           <a href={`https://www.indeed.com${j.viewJobLink}`} target="_blank" rel="noreferrer">
@@ -45,7 +45,12 @@ function JobCard(props) {
             <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
           </div>
           <div className="ms-auto">
-            <Button variant="light" size="sm" style={{"--bs-btn-padding-y": 0}}>
+            <Button
+              variant="light" size="sm"
+              style={{"--bs-btn-padding-y": 0}}
+              onClick={props.hideCompany}
+              disabled={j.hidden}
+            >
               <i className="bi bi-eye-slash" />
             </Button>
           </div>
