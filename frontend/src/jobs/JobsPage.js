@@ -6,6 +6,7 @@ import JobList from "./JobList";
 function JobsPage() {
   const [jobs, setJobs] = useState([]);
   const [totalJobCount, setTotalJobCount] = useState(null);
+  const [loading, setLoading] = useState(true);
   const api = useContext(ApiContext);
 
   useEffect(() => {
@@ -14,7 +15,8 @@ function JobsPage() {
         setJobs(results.jobs);
         setTotalJobCount(results.totalCount);
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(err))
+      .finally(() => setLoading(false));
   }, [api]);
 
   function hideCompany(name) {
@@ -28,7 +30,8 @@ function JobsPage() {
   return (
     <div className="JobsPage">
       <div className="m-4">
-        <h4>Showing {jobs.length} of {totalJobCount} jobs...</h4>
+        { loading && <h4>Loading jobs...</h4> }
+        { !loading && <h4>Showing {jobs.length} of {totalJobCount} jobs</h4> }
       </div>
       <JobList jobs={jobs} hideCompany={hideCompany} />
     </div>
