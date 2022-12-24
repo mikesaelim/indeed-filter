@@ -30,7 +30,7 @@ function JobCard(props) {
   const j = props.job;
 
   return (
-    <Card className={`h-100 ${j.hidden && "opacity-25"}`}>
+    <Card className={`h-100 ${j.hidden && "opacity-25"}`} data-testid={`card-${j.jobkey}`}>
       <Card.Body>
         <Card.Title className="text-truncate">
           <a href={`https://www.indeed.com${j.viewJobLink}`} target="_blank" rel="noreferrer">
@@ -50,6 +50,7 @@ function JobCard(props) {
               style={{"--bs-btn-padding-y": 0}}
               onClick={props.hideCompany}
               disabled={j.hidden}
+              data-testid={`hide-${j.jobkey}`}
             >
               <i className="bi bi-eye-slash" />
             </Button>

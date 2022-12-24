@@ -9,7 +9,6 @@ function JobsPage() {
   const api = useContext(ApiContext);
 
   useEffect(() => {
-    // TODO: loading overlay?
     api.listJobs()
       .then(results => {
         setJobs(results.jobs);
