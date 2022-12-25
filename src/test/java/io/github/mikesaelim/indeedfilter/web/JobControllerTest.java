@@ -1,5 +1,6 @@
 package io.github.mikesaelim.indeedfilter.web;
 
+import io.github.mikesaelim.indeedfilter.persistence.Company;
 import io.github.mikesaelim.indeedfilter.persistence.Job;
 import io.github.mikesaelim.indeedfilter.persistence.JobRepository;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,33 @@ class JobControllerTest {
                 jsonPath("$.jobs[1].jobkey").value("b2"),
                 jsonPath("$.jobs[1].title").value("White Pawn"),
                 jsonPath("$.jobs[1].company").value("Lichess")
+        );
+    }
+
+    @Test
+    void testListCompanies() throws Exception {
+        when(jobRepository.findCompanies()).thenReturn(List.of(
+                new Company() {
+                    @Override public String getName() { return "Chess.com"; }
+                    @Override public Integer getJobCount() { return 8; }
+                    @Override public Boolean isHidden() { return false; }
+                },
+                new Company() {
+                    @Override public String getName() { return "Lichess"; }
+                    @Override public Integer getJobCount() { return 3; }
+                    @Override public Boolean isHidden() { return true; }
+                }
+        ));
+
+        mockMvc.perform(get("/api/companies")).andExpectAll(
+                status().isOk(),
+                jsonPath("length($)").value(2),
+                jsonPath("$[0].name").value("Chess.com"),
+                jsonPath("$[0].jobCount").value(8),
+                jsonPath("$[0].hidden").value(false),
+                jsonPath("$[1].name").value("Lichess"),
+                jsonPath("$[1].jobCount").value(3),
+                jsonPath("$[1].hidden").value(true)
         );
     }
 
