@@ -8,6 +8,15 @@ const Api = {
         return response.json();
       });
   },
+  listCompanies: async () => {
+    return fetch("/api/companies")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+        return response.json();
+      });
+  },
   listHiddenCompanies: async () => {
     return fetch("/api/hidden-companies")
       .then(response => {

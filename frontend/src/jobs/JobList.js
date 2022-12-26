@@ -1,11 +1,11 @@
 import { DateTime } from "luxon";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 
 import "./JobList.css";
+import HideButton from "./HideButton";
 
 const TODAY = DateTime.local().startOf("day");
 const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat();
@@ -45,15 +45,11 @@ function JobCard(props) {
             <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
           </div>
           <div className="ms-auto">
-            <Button
-              variant="light" size="sm"
-              style={{"--bs-btn-padding-y": 0}}
+            <HideButton
               onClick={props.hideCompany}
               disabled={j.hidden}
-              data-testid={`hide-${j.jobkey}`}
-            >
-              <i className="bi bi-eye-slash" />
-            </Button>
+              testid={`hide-job-${j.jobkey}`}
+            />
           </div>
         </Stack>
       </Card.Footer>

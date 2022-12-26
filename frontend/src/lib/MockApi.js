@@ -135,6 +135,13 @@ const MockApi = {
       ]
     };
   },
+  listCompanies: async () => {
+    return [
+      { "name": "Google", "jobCount": 22, "hidden": false },
+      { "name": "Amazon", "jobCount": 14, "hidden": true },
+      { "name": "Deloitte", "jobCount": 9, "hidden": false }
+    ];
+  },
   listHiddenCompanies: async () => {
     return [
       { "id": 14, "name": "Citadel" },

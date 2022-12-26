@@ -13,6 +13,11 @@ const createMockApi = () => ({
       {"jobkey": "d4", "title": "Influencer", "company": "Sarpino's", "viewJobLink": "/link", "pubDate": "2022-12-21"}
     ]
   }),
+  listCompanies: async () => [
+    {"name": "Sarpino's", "jobCount": 2, "hidden": false},
+    {"name": "Connie's Pizza", "jobCount": 1, "hidden": false},
+    {"name": "Wrigley's", "jobCount": 1, "hidden": false}
+  ],
   hideCompany: jest.fn()
 });
 
@@ -41,7 +46,7 @@ describe("JobsPage", () => {
     );
 
     await screen.findByText("Something Engineer");
-    await user.click(screen.getByTestId("hide-a1"));
+    await user.click(screen.getByTestId("hide-job-a1"));
     expect(screen.getByTestId("card-a1")).toHaveClass("opacity-25");
     ["card-b2", "card-c3", "card-d4"].forEach(testid => {
       expect(screen.getByTestId(testid)).not.toHaveClass("opacity-25");
@@ -50,7 +55,7 @@ describe("JobsPage", () => {
     expect(mockApi.hideCompany.mock.calls[0][0]).toEqual("Connie's Pizza");
 
     // both Sarpino's jobs listings should be hidden
-    await user.click(screen.getByTestId("hide-d4"));
+    await user.click(screen.getByTestId("hide-job-d4"));
     ["card-a1", "card-b2", "card-d4"].forEach(testid => {
       expect(screen.getByTestId(testid)).toHaveClass("opacity-25");
     });
