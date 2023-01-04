@@ -33,7 +33,7 @@ function JobCard(props) {
     <Card className={`h-100 ${j.hidden && "opacity-25"}`} data-testid={`card-${j.jobkey}`}>
       <Card.Body>
         <Card.Title className="text-truncate">
-          <a href={`https://www.indeed.com${j.viewJobLink}`} target="_blank" rel="noreferrer">
+          <a href={j.viewJobLink} target="_blank" rel="noreferrer">
             {j.title}
           </a>
         </Card.Title>
