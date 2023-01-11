@@ -33,7 +33,7 @@ public class JobController {
             jobs = jobRepository.findAllExcludingHiddenCompanies();
         }
 
-        return ResponseEntity.ok(new JobList(totalJobCount, jobs));
+        return ResponseEntity.ok(new JobList(totalJobCount, jobs.stream().map(JobModel::fromJob).toList()));
     }
 
     /**

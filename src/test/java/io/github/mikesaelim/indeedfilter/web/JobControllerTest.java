@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -44,6 +45,7 @@ class JobControllerTest {
                 jsonPath("$.jobs[0].jobkey").value("a1"),
                 jsonPath("$.jobs[0].title").value("White Rook"),
                 jsonPath("$.jobs[0].company").value("Chess.com"),
+                jsonPath("$.jobs[0].pubDate").value("2023-01-10T19:20:04Z"),
                 jsonPath("$.jobs[1].jobkey").value("b2"),
                 jsonPath("$.jobs[1].title").value("White Pawn"),
                 jsonPath("$.jobs[1].company").value("Lichess")
@@ -100,6 +102,7 @@ class JobControllerTest {
         job.setJobkey(jobkey);
         job.setTitle(title);
         job.setCompany(company);
+        job.setPubDate(LocalDateTime.of(2023, 1, 10, 19, 20, 4));
         return job;
     }
 

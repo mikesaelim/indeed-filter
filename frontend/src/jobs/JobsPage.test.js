@@ -7,10 +7,10 @@ const createMockApi = () => ({
   listJobs: async () => ({
     "totalCount": 12,
     "jobs": [
-      {"jobkey": "a1", "title": "Something Engineer", "company": "Connie's Pizza", "viewJobLink": "link", "pubDate": "2022-12-23"},
-      {"jobkey": "b2", "title": "Brand Ambassador", "company": "Sarpino's", "viewJobLink": "link", "pubDate": "2022-12-22"},
-      {"jobkey": "c3", "title": "Breath Tester", "company": "Wrigley's", "viewJobLink": "link", "pubDate": "2022-12-22"},
-      {"jobkey": "d4", "title": "Influencer", "company": "Sarpino's", "viewJobLink": "link", "pubDate": "2022-12-21"}
+      {"jobkey": "a1", "title": "Something Engineer", "company": "Connie's Pizza", "viewJobLink": "link", "pubDate": "2022-12-23T06:00:00Z"},
+      {"jobkey": "b2", "title": "Brand Ambassador", "company": "Sarpino's", "viewJobLink": "link", "pubDate": "2022-12-22T06:00:00Z"},
+      {"jobkey": "c3", "title": "Breath Tester", "company": "Wrigley's", "viewJobLink": "link", "pubDate": "2022-12-22T06:00:00Z"},
+      {"jobkey": "d4", "title": "Influencer", "company": "Sarpino's", "viewJobLink": "link", "pubDate": "2022-12-21T06:00:00Z"}
     ]
   }),
   listCompanies: async () => [

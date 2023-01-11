@@ -1,6 +1,5 @@
 package io.github.mikesaelim.indeedfilter.web;
 
-import io.github.mikesaelim.indeedfilter.persistence.Job;
 import lombok.Value;
 
 import java.util.List;
@@ -12,5 +11,5 @@ public class JobList {
      */
     Long totalCount;
 
-    List<Job> jobs;
+    List<JobModel> jobs;
 }

@@ -58,7 +58,7 @@ function JobCard(props) {
 }
 
 function timeAgo(pubDate) {
-  const days = DateTime.fromISO(pubDate).diff(TODAY, "days").days;
+  const days = DateTime.fromISO(pubDate).toLocal().startOf("day").diff(TODAY, "days").days;
   if (days === 0) {
     return "today";
   } else if (days < -30) {
