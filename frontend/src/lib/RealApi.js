@@ -1,4 +1,4 @@
-const Api = {
+const RealApi = {
   listJobs: async () => {
     return fetch("/api/jobs")
       .then(response => {
@@ -48,4 +48,4 @@ const Api = {
   }
 };
 
-export default Api;
+export default RealApi;
