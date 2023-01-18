@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./App.css";
 import CompaniesPage from "./companies/CompaniesPage";
 import JobsPage from "./jobs/JobsPage";
-import ApiContext from "./lib/ApiContext";
+import { ApiContext } from "./lib/Api";
 import MockApi from "./lib/MockApi";
 import RealApi from "./lib/RealApi";
 

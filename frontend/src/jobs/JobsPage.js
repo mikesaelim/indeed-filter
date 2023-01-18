@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
-import ApiContext from "../lib/ApiContext";
+import { ApiContext } from "../lib/Api";
 import CompanyList from "./CompanyList";
 import JobList from "./JobList";
 

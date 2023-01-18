@@ -149,11 +149,11 @@ const MockApi = {
       { "id": 8, "name": "Twitter" }
     ];
   },
-  hideCompany: async (name) => {
+  hideCompany: async (name: string) => {
     alert(`Company ${name} is hidden!`);
     return { "id": 23, "name": name };
   },
-  unhideCompany: async (id) => {
+  unhideCompany: async (id: number) => {
     alert(`Company ${id} is unhidden!`);
   }
 };

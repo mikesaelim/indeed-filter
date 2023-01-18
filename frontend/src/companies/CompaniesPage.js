@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import ApiContext from "../lib/ApiContext";
 
 import "./CompaniesPage.css";
+import { ApiContext } from "../lib/Api";
 
 function CompaniesPage() {
   const [companies, setCompanies] = useState([]);

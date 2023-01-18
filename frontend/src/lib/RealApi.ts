@@ -26,7 +26,7 @@ const RealApi = {
         return response.json();
       });
   },
-  hideCompany: async (name) => {
+  hideCompany: async (name: string) => {
     return fetch("/api/hidden-companies", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,7 +38,7 @@ const RealApi = {
       return response.json();
     });
   },
-  unhideCompany: async (id) => {
+  unhideCompany: async (id: number) => {
     return fetch("/api/hidden-companies/" + id, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {

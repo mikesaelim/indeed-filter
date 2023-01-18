@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import CompaniesPage from "./CompaniesPage";
-import ApiContext from "../lib/ApiContext";
+import { ApiContext } from "../lib/Api";
 
 const createMockApi = () => ({
   listHiddenCompanies: async () => ([
