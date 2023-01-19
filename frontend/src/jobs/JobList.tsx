@@ -1,4 +1,3 @@
-import { DateTime } from "luxon";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -7,9 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import "./JobList.css";
 import { Job } from "../lib/Api";
 import HideButton from "./HideButton";
-
-const TODAY = DateTime.local().startOf("day");
-const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat();
+import TimeAgo from "./TimeAgo";
 
 type JobListProps = {
   jobs: Job[];
@@ -53,7 +50,9 @@ function JobCard(props: JobCardProps) {
       <Card.Footer>
         <Stack direction="horizontal" gap={3}>
           <div>
-            <small className="text-muted">Posted {timeAgo(j.pubDate)}</small>
+            <small className="text-muted">
+              Posted <TimeAgo dateTime={j.pubDate} />
+            </small>
           </div>
           <div className="ms-auto">
             <HideButton
@@ -66,17 +65,6 @@ function JobCard(props: JobCardProps) {
       </Card.Footer>
     </Card>
   );
-}
-
-function timeAgo(pubDate: string): string {
-  const days = DateTime.fromISO(pubDate).toLocal().startOf("day").diff(TODAY, "days").days;
-  if (days === 0) {
-    return "today";
-  } else if (days < -30) {
-    return "30+ days ago";
-  } else {
-    return RELATIVE_TIME_FORMAT.format(days, "day");
-  }
 }
 
 export default JobList;
