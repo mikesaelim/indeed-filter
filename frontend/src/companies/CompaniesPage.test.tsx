@@ -4,6 +4,8 @@ import CompaniesPage from "./CompaniesPage";
 import { ApiContext } from "../lib/Api";
 
 const createMockApi = () => ({
+  listJobs: jest.fn(),
+  listCompanies: jest.fn(),
   listHiddenCompanies: async () => ([
     { "id": 14, "name": "Citadel" },
     { "id": 5, "name": "Palantir" },
@@ -28,7 +30,7 @@ describe("CompaniesPage", () => {
 
   test("calls the api to hide a company", async () => {
     const mockApi = createMockApi();
-    mockApi.hideCompany.mockResolvedValue();
+    mockApi.hideCompany.mockResolvedValue(null);
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>
@@ -46,7 +48,7 @@ describe("CompaniesPage", () => {
 
   test("calls the api to unhide a company", async () => {
     const mockApi = createMockApi();
-    mockApi.unhideCompany.mockResolvedValue();
+    mockApi.unhideCompany.mockResolvedValue(null);
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>

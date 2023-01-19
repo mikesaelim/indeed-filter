@@ -5,9 +5,10 @@
 Indeed doesn't allow users to filter out job listings by company, so I'm gonna do it myself.
 
 This is a [Spring Boot](https://spring.io/projects/spring-boot) app that serves a REST API and a 
-[React](https://reactjs.org/) frontend that consumes that API.  It is intended to run locally and connect to a local
-MySQL database storing job listings.  The database is populated beforehand by a local batch job that scrapes results
-from the [Indeed](https://www.indeed.com/) website, using code in another repo.
+[TypeScript](https://www.typescriptlang.org/) + [React](https://reactjs.org/) frontend that consumes that API.  
+It is intended to run locally and connect to a local MySQL database storing job listings.  The database is populated 
+beforehand by a local batch job that scrapes results from the [Indeed](https://www.indeed.com/) website, using code 
+in another repo.
 
 ## Usage
 

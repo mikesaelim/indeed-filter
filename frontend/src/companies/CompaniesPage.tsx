@@ -7,10 +7,10 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import "./CompaniesPage.css";
-import { ApiContext } from "../lib/Api";
+import { ApiContext, HiddenCompany } from "../lib/Api";
 
 function CompaniesPage() {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState<HiddenCompany[]>([]);
   const [newCompanyName, setNewCompanyName] = useState("");
   const api = useContext(ApiContext);
 
@@ -22,18 +22,18 @@ function CompaniesPage() {
       .catch(err => console.log(err));
   }
 
-  function hideCompany(event) {
+  function hideCompany(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (newCompanyName == null || newCompanyName.trim() === "") {
       return;
     }
     api.hideCompany(newCompanyName.trim())
       .then(loadCompanies)
-      .then(setNewCompanyName(""))
+      .then(() => setNewCompanyName(""))
       .catch(err => console.log(err));
   }
 
-  function unhideCompany(id) {
+  function unhideCompany(id: number) {
     api.unhideCompany(id)
       .then(loadCompanies)
       .catch(err => console.log(err));
@@ -51,7 +51,7 @@ function CompaniesPage() {
               <Accordion flush>
                 {
                   companies.map(c => (
-                    <Accordion.Item eventKey={c.id} key={c.id}>
+                    <Accordion.Item eventKey={c.id.toString()} key={c.id}>
                       <Accordion.Header>{c.name}</Accordion.Header>
                       <Accordion.Body>
                         <Button variant="danger" size="sm" className="mx-2" onClick={() => unhideCompany(c.id)}>
