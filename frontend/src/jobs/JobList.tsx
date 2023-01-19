@@ -5,12 +5,18 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 
 import "./JobList.css";
+import { Job } from "../lib/Api";
 import HideButton from "./HideButton";
 
 const TODAY = DateTime.local().startOf("day");
 const RELATIVE_TIME_FORMAT = new Intl.RelativeTimeFormat();
 
-function JobList(props) {
+type JobListProps = {
+  jobs: Job[];
+  hideCompany: (company: string) => void;
+};
+
+function JobList(props: JobListProps) {
   return (
     <div className="jobs my-2 mx-auto">
       <Row xs={1} md={2} className="g-4">
@@ -26,7 +32,12 @@ function JobList(props) {
   );
 }
 
-function JobCard(props) {
+type JobCardProps = {
+  job: Job;
+  hideCompany: () => void;
+}
+
+function JobCard(props: JobCardProps) {
   const j = props.job;
 
   return (
@@ -47,7 +58,7 @@ function JobCard(props) {
           <div className="ms-auto">
             <HideButton
               onClick={props.hideCompany}
-              disabled={j.hidden}
+              disabled={j.hidden || false}
               testid={`hide-job-${j.jobkey}`}
             />
           </div>
@@ -57,7 +68,7 @@ function JobCard(props) {
   );
 }
 
-function timeAgo(pubDate) {
+function timeAgo(pubDate: string): string {
   const days = DateTime.fromISO(pubDate).toLocal().startOf("day").diff(TODAY, "days").days;
   if (days === 0) {
     return "today";

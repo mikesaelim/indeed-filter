@@ -1,20 +1,23 @@
 import { createContext } from "react";
 
+import MockApi from "./MockApi";
+
 export interface Job {
   jobkey: string;
   title: string;
   company: string;
-  companyIdEncrypted: string;
+  companyIdEncrypted?: string | null;
   viewJobLink: string;
-  expired: boolean;
+  expired?: boolean | null;
   pubDate: string;
-  jobLocationCity: string;
-  jobLocationState: string;
-  jobLocationPostal: string;
-  jobLocationExtras: string;
-  formattedLocation: string;
-  formattedRelativeTime: string;
-  snippet: string;
+  jobLocationCity?: string | null;
+  jobLocationState?: string | null;
+  jobLocationPostal?: string | null;
+  jobLocationExtras?: string | null;
+  formattedLocation?: string | null;
+  formattedRelativeTime?: string | null;
+  snippet?: string | null;
+  hidden?: boolean;
 }
 
 export interface JobListResponse {
@@ -41,4 +44,4 @@ export interface Api {
   unhideCompany: (id: number) => Promise<void>;
 }
 
-export const ApiContext = createContext<Api | null>(null);
+export const ApiContext = createContext<Api>(MockApi);

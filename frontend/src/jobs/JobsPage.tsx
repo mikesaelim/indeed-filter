@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 
-import { ApiContext } from "../lib/Api";
+import { ApiContext, Company, Job } from "../lib/Api";
 import CompanyList from "./CompanyList";
 import JobList from "./JobList";
 
 function JobsPage() {
-  const [jobs, setJobs] = useState([]);
-  const [totalJobCount, setTotalJobCount] = useState(null);
-  const [companies, setCompanies] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [totalJobCount, setTotalJobCount] = useState<number | null>(null);
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [showSidePanel, setShowSidePanel] = useState(false);
   const api = useContext(ApiContext);
@@ -26,7 +26,7 @@ function JobsPage() {
       .catch(err => console.log(err));
   }, [api]);
 
-  function hideCompany(name) {
+  function hideCompany(name: string) {
     const newJobs = jobs.map(job => (job.company === name) ? {...job, hidden: true} : job);
     setJobs(newJobs);
     const newCompanies = companies.map(c => (c.name === name) ? {...c, hidden: true} : c);

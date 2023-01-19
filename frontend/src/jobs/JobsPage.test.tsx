@@ -18,7 +18,9 @@ const createMockApi = () => ({
     {"name": "Connie's Pizza", "jobCount": 1, "hidden": false},
     {"name": "Wrigley's", "jobCount": 1, "hidden": false}
   ],
-  hideCompany: jest.fn()
+  listHiddenCompanies: jest.fn(),
+  hideCompany: jest.fn(),
+  unhideCompany: jest.fn()
 });
 
 describe("JobsPage", () => {
@@ -37,7 +39,7 @@ describe("JobsPage", () => {
 
   test("when the hide button is clicked, hides all jobs from that company", async () => {
     const mockApi = createMockApi();
-    mockApi.hideCompany.mockResolvedValue();
+    mockApi.hideCompany.mockResolvedValue(null);
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>

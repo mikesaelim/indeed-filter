@@ -1,9 +1,15 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Stack from "react-bootstrap/Stack";
 
+import { Company } from "../lib/Api";
 import HideButton from "./HideButton";
 
-function CompanyList(props) {
+type CompanyListProps = {
+  companies: Company[];
+  hideCompany: (company: string) => void;
+}
+
+function CompanyList(props: CompanyListProps) {
   return (
     <ListGroup variant="flush">
       {
