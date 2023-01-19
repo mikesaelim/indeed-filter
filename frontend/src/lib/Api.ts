@@ -41,4 +41,4 @@ export interface Api {
   unhideCompany: (id: number) => Promise<void>;
 }
 
-export const ApiContext = createContext(null);
+export const ApiContext = createContext<Api | null>(null);
