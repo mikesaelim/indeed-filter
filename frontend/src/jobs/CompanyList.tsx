@@ -13,7 +13,7 @@ function CompanyList(props: CompanyListProps) {
   return (
     <ListGroup variant="flush">
       {
-        props.companies.slice(0, 50).map(c => (
+        props.companies.slice(0, 100).map(c => (
           <ListGroup.Item key={c.name}>
             <Stack direction="horizontal" gap={3} className={`${c.hidden && "opacity-25"}`}>
               <div>
