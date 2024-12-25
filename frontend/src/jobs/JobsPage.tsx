@@ -36,6 +36,11 @@ function JobsPage() {
     setFilteredJobs(jobs.filter(job => job.company.toLowerCase().includes(lowercaseQuery)));
   }, [jobs, companyFilterQuery]);
 
+  function focusCompany(name: string) {
+    setCompanyFilterQuery(name);
+    setShowSidePanel(false);
+  }
+
   function hideCompany(name: string) {
     const newJobs = jobs.map(job => (job.company === name) ? {...job, hidden: true} : job);
     setJobs(newJobs);
@@ -81,6 +86,7 @@ function JobsPage() {
         <Offcanvas.Body>
           <CompanyList
             companies={companies}
+            focusCompany={focusCompany}
             hideCompany={hideCompany}
           />
         </Offcanvas.Body>

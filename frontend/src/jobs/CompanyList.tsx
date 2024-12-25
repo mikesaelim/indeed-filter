@@ -2,10 +2,12 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Stack from "react-bootstrap/Stack";
 
 import { Company } from "../lib/Api";
+import FocusButton from "./FocusButton";
 import HideButton from "./HideButton";
 
 type CompanyListProps = {
   companies: Company[];
+  focusCompany: (company: string) => void;
   hideCompany: (company: string) => void;
 }
 
@@ -20,6 +22,10 @@ function CompanyList(props: CompanyListProps) {
                 {c.name} ({c.jobCount})
               </div>
               <div className="ms-auto">
+                <FocusButton
+                  onClick={() => props.focusCompany(c.name)}
+                  disabled={c.hidden}
+                />
                 <HideButton
                   onClick={() => props.hideCompany(c.name)}
                   disabled={c.hidden}
