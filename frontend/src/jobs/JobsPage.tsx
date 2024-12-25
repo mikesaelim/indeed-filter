@@ -1,5 +1,8 @@
 import { useContext, useEffect, useState } from "react";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import Row from "react-bootstrap/Row";
 
 import { ApiContext, Company, Job } from "../lib/Api";
 import CompanyList from "./CompanyList";
@@ -10,6 +13,8 @@ function JobsPage() {
   const [totalJobCount, setTotalJobCount] = useState<number | null>(null);
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
+  const [companyFilterQuery, setCompanyFilterQuery] = useState("");
+  const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
   const [showSidePanel, setShowSidePanel] = useState(false);
   const api = useContext(ApiContext);
 
@@ -26,6 +31,11 @@ function JobsPage() {
       .catch(err => console.log(err));
   }, [api]);
 
+  useEffect(() => {
+    const lowercaseQuery = companyFilterQuery.toLowerCase();
+    setFilteredJobs(jobs.filter(job => job.company.toLowerCase().includes(lowercaseQuery)));
+  }, [jobs, companyFilterQuery]);
+
   function hideCompany(name: string) {
     const newJobs = jobs.map(job => (job.company === name) ? {...job, hidden: true} : job);
     setJobs(newJobs);
@@ -39,17 +49,30 @@ function JobsPage() {
   return (
     <div className="JobsPage">
       <div className="m-4">
-        { loading && <h4>Loading jobs...</h4> }
-        {
-          !loading &&
-            <h4>
-              Showing {jobs.length} of {totalJobCount} jobs from&nbsp;
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-              <a href="#" onClick={() => setShowSidePanel(true)}>{companies.length} companies</a>
-            </h4>
-        }
+        <Row>
+          <Col xs={9}>
+            { loading && <h4>Loading jobs...</h4> }
+            {
+              !loading &&
+              <h4>
+                Showing {jobs.length} of {totalJobCount} jobs from&nbsp;
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#" onClick={() => setShowSidePanel(true)}>{companies.length} companies</a>
+              </h4>
+            }
+          </Col>
+          <Col xs={3}>
+            <Form.Control
+              value={companyFilterQuery}
+              onChange={event => setCompanyFilterQuery(event.target.value)}
+              placeholder="filter by company"
+              size="sm"
+            />
+          </Col>
+        </Row>
       </div>
-      <JobList jobs={jobs} hideCompany={hideCompany} />
+
+      <JobList jobs={filteredJobs} hideCompany={hideCompany} />
 
       <Offcanvas show={showSidePanel} onHide={() => setShowSidePanel(false)}>
         <Offcanvas.Header closeButton>
