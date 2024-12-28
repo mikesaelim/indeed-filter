@@ -1,6 +1,6 @@
 package io.github.mikesaelim.indeedfilter.web;
 
-import io.github.mikesaelim.indeedfilter.persistence.Company;
+import io.github.mikesaelim.indeedfilter.persistence.JobCompany;
 import io.github.mikesaelim.indeedfilter.persistence.Job;
 import io.github.mikesaelim.indeedfilter.persistence.JobRepository;
 import org.junit.jupiter.api.Test;
@@ -73,19 +73,19 @@ class JobControllerTest {
     @Test
     void testListCompanies() throws Exception {
         when(jobRepository.findCompanies()).thenReturn(List.of(
-                new Company() {
+                new JobCompany() {
                     @Override public String getName() { return "Chess.com"; }
                     @Override public Integer getJobCount() { return 8; }
                     @Override public Boolean isHidden() { return false; }
                 },
-                new Company() {
+                new JobCompany() {
                     @Override public String getName() { return "Lichess"; }
                     @Override public Integer getJobCount() { return 3; }
                     @Override public Boolean isHidden() { return true; }
                 }
         ));
 
-        mockMvc.perform(get("/api/companies")).andExpectAll(
+        mockMvc.perform(get("/api/jobs/companies")).andExpectAll(
                 status().isOk(),
                 jsonPath("length($)").value(2),
                 jsonPath("$[0].name").value("Chess.com"),

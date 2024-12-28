@@ -1,7 +1,7 @@
 package io.github.mikesaelim.indeedfilter.web;
 
-import io.github.mikesaelim.indeedfilter.persistence.Company;
 import io.github.mikesaelim.indeedfilter.persistence.Job;
+import io.github.mikesaelim.indeedfilter.persistence.JobCompany;
 import io.github.mikesaelim.indeedfilter.persistence.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -39,8 +39,8 @@ public class JobController {
     /**
      * Returns the companies from the list of jobs, sorted by most jobs first.
      */
-    @GetMapping("/api/companies")
-    ResponseEntity<List<Company>> listCompanies() {
+    @GetMapping("/api/jobs/companies")
+    ResponseEntity<List<JobCompany>> listCompanies() {
         return ResponseEntity.ok(jobRepository.findCompanies());
     }
 

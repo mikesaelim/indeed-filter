@@ -1,18 +1,25 @@
 package io.github.mikesaelim.indeedfilter.persistence;
 
-import org.springframework.beans.factory.annotation.Value;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-/**
- * Interface projection DTO
- * See https://vladmihalcea.com/spring-jpa-dto-projection/
- */
-public interface Company {
+@Entity
+@Table(name = "companies")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    String getName();
+    @Column(unique = true)
+    private String name;
 
-    Integer getJobCount();
+    private String notes;
 
-    @Value("#{target.hidden == 1}")
-    Boolean isHidden();
-
+    @Column(nullable = false)
+    private Boolean hidden = false;
 }

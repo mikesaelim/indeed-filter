@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS hidden_companies;
+
+CREATE TABLE IF NOT EXISTS companies (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    name VARCHAR(128) NOT NULL UNIQUE,
+    notes TEXT,
+    hidden BOOLEAN NOT NULL DEFAULT false,
+    PRIMARY KEY (id)
+);
