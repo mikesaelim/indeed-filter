@@ -135,23 +135,23 @@ const MockApi = {
       ]
     };
   },
-  listCompanies: async () => {
+  listJobCompanies: async () => {
     return [
       { "name": "Google", "jobCount": 22, "hidden": false },
       { "name": "Amazon", "jobCount": 14, "hidden": true },
       { "name": "Deloitte", "jobCount": 9, "hidden": false }
     ];
   },
-  listHiddenCompanies: async () => {
+  listCompanies: async () => {
     return [
-      { "id": 14, "name": "Citadel" },
-      { "id": 5, "name": "Palantir" },
-      { "id": 8, "name": "Twitter" }
+      { "id": 14, "name": "Citadel", "notes": null, "hidden": true },
+      { "id": 5, "name": "Palantir", "notes": "eww", "hidden": true },
+      { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
     ];
   },
   hideCompany: async (name: string) => {
     alert(`Company ${name} is hidden!`);
-    return { "id": 23, "name": name };
+    return { "id": 23, "name": name, "notes": null, "hidden": true };
   },
   unhideCompany: async (id: number) => {
     alert(`Company ${id} is unhidden!`);

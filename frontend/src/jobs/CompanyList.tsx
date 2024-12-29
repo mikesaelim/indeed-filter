@@ -1,12 +1,12 @@
 import ListGroup from "react-bootstrap/ListGroup";
 import Stack from "react-bootstrap/Stack";
 
-import { Company } from "../lib/Api";
+import { JobCompany } from "../lib/Api";
 import FocusButton from "./FocusButton";
 import HideButton from "./HideButton";
 
 type CompanyListProps = {
-  companies: Company[];
+  companies: JobCompany[];
   focusCompany: (company: string) => void;
   hideCompany: (company: string) => void;
 }

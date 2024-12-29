@@ -25,22 +25,24 @@ export interface JobListResponse {
   jobs: Job[];
 }
 
-export interface Company {
+export interface JobCompany {
   name: string;
   jobCount: number;
   hidden: boolean;
 }
 
-export interface HiddenCompany {
+export interface Company {
   id: number;
   name: string;
+  notes: string | null;
+  hidden: boolean;
 }
 
 export interface Api {
   listJobs: () => Promise<JobListResponse>;
+  listJobCompanies: () => Promise<JobCompany[]>;
   listCompanies: () => Promise<Company[]>;
-  listHiddenCompanies: () => Promise<HiddenCompany[]>;
-  hideCompany: (name: string) => Promise<HiddenCompany>;
+  hideCompany: (name: string) => Promise<Company>;
   unhideCompany: (id: number) => Promise<void>;
 }
 

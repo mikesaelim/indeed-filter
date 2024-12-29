@@ -7,18 +7,18 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import "./CompaniesPage.css";
-import { ApiContext, HiddenCompany } from "../lib/Api";
+import { ApiContext, Company } from "../lib/Api";
 
 function CompaniesPage() {
-  const [companies, setCompanies] = useState<HiddenCompany[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [newCompanyName, setNewCompanyName] = useState("");
   const api = useContext(ApiContext);
 
   useEffect(loadCompanies, [api]);
 
   function loadCompanies() {
-    api.listHiddenCompanies()
-      .then(results => setCompanies(results))
+    api.listCompanies()
+      .then(results => setCompanies(results.filter(c => c.hidden)))
       .catch(err => console.log(err));
   }
 

@@ -8,6 +8,15 @@ const RealApi = {
         return response.json();
       });
   },
+  listJobCompanies: async () => {
+    return fetch("/api/jobs/companies")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+        return response.json();
+      });
+  },
   listCompanies: async () => {
     return fetch("/api/companies")
       .then(response => {
@@ -17,20 +26,11 @@ const RealApi = {
         return response.json();
       });
   },
-  listHiddenCompanies: async () => {
-    return fetch("/api/hidden-companies")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Response was " + response.status);
-        }
-        return response.json();
-      });
-  },
   hideCompany: async (name: string) => {
-    return fetch("/api/hidden-companies", {
+    return fetch("/api/companies", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ "name": name }),
+      body: JSON.stringify({ "name": name, "hidden": true }),
     }).then(response => {
       if (!response.ok) {
         throw new Error("Response was " + response.status);
@@ -39,7 +39,7 @@ const RealApi = {
     });
   },
   unhideCompany: async (id: number) => {
-    return fetch("/api/hidden-companies/" + id, { method: "DELETE" })
+    return fetch("/api/companies/" + id, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw new Error("Response was " + response.status);

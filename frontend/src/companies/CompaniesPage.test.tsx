@@ -5,11 +5,11 @@ import { ApiContext } from "../lib/Api";
 
 const createMockApi = () => ({
   listJobs: jest.fn(),
-  listCompanies: jest.fn(),
-  listHiddenCompanies: async () => ([
-    { "id": 14, "name": "Citadel" },
-    { "id": 5, "name": "Palantir" },
-    { "id": 8, "name": "Twitter" }
+  listJobCompanies: jest.fn(),
+  listCompanies: async () => ([
+    { "id": 14, "name": "Citadel", "notes": null, "hidden": true },
+    { "id": 5, "name": "Palantir", "notes": "eww", "hidden": true },
+    { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
   ]),
   hideCompany: jest.fn(),
   unhideCompany: jest.fn()
@@ -25,7 +25,7 @@ describe("CompaniesPage", () => {
 
     expect(await screen.findByText("Citadel")).toBeInTheDocument();
     expect(screen.getByText("Palantir")).toBeInTheDocument();
-    expect(screen.getByText("Twitter")).toBeInTheDocument();
+    expect(screen.queryByText("Twitter")).not.toBeInTheDocument();
   });
 
   test("calls the api to hide a company", async () => {

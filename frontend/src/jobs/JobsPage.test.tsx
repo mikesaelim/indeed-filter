@@ -13,12 +13,12 @@ const createMockApi = () => ({
       {"jobkey": "d4", "title": "Influencer", "company": "Sarpino's", "viewJobLink": "link", "pubDate": "2022-12-21T06:00:00Z"}
     ]
   }),
-  listCompanies: async () => [
+  listJobCompanies: async () => [
     {"name": "Sarpino's", "jobCount": 2, "hidden": false},
     {"name": "Connie's Pizza", "jobCount": 1, "hidden": false},
     {"name": "Wrigley's", "jobCount": 1, "hidden": false}
   ],
-  listHiddenCompanies: jest.fn(),
+  listCompanies: jest.fn(),
   hideCompany: jest.fn(),
   unhideCompany: jest.fn()
 });

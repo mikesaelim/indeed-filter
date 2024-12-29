@@ -4,14 +4,14 @@ import Form from "react-bootstrap/Form";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
 
-import { ApiContext, Company, Job } from "../lib/Api";
+import { ApiContext, Job, JobCompany } from "../lib/Api";
 import CompanyList from "./CompanyList";
 import JobList from "./JobList";
 
 function JobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [totalJobCount, setTotalJobCount] = useState<number | null>(null);
-  const [companies, setCompanies] = useState<Company[]>([]);
+  const [companies, setCompanies] = useState<JobCompany[]>([]);
   const [loading, setLoading] = useState(true);
   const [companyFilterQuery, setCompanyFilterQuery] = useState("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
@@ -26,7 +26,7 @@ function JobsPage() {
       })
       .catch(err => console.log(err))
       .finally(() => setLoading(false));
-    api.listCompanies()
+    api.listJobCompanies()
       .then(results => setCompanies(results))
       .catch(err => console.log(err));
   }, [api]);
