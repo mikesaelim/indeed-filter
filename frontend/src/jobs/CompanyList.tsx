@@ -22,12 +22,12 @@ function CompanyList(props: CompanyListProps) {
                 {c.name} ({c.jobCount})
               </div>
               <div className="ms-auto">
-                <FocusButton
-                  onClick={() => props.focusCompany(c.name)}
-                  disabled={c.hidden}
-                />
                 <HideButton
                   onClick={() => props.hideCompany(c.name)}
+                  disabled={c.hidden}
+                />
+                <FocusButton
+                  onClick={() => props.focusCompany(c.name)}
                   disabled={c.hidden}
                 />
               </div>

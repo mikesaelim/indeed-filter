@@ -68,6 +68,7 @@ function JobsPage() {
           </Col>
           <Col xs={3}>
             <Form.Control
+              type="search"
               value={companyFilterQuery}
               onChange={event => setCompanyFilterQuery(event.target.value)}
               placeholder="filter by company"

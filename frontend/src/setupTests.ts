@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 // Fix for window.matchMedia not being implemented in JSDOM
 // https://jestjs.io/docs/29.4/manual-mocks#mocking-methods-which-are-not-implemented-in-jsdom
 global.beforeEach(() => {
-  Object.defineProperty(window, 'matchMedia', {
+  Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: jest.fn().mockImplementation(query => ({
       matches: false,

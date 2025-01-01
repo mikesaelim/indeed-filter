@@ -14,7 +14,7 @@ function FocusButton(props: FocusButtonProps) {
       onClick={props.onClick}
       disabled={props.disabled}
     >
-      <i className="bi bi-zoom-in" />
+      <i className="bi bi-box-arrow-right" />
     </Button>
   );
 }
