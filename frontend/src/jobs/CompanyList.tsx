@@ -1,5 +1,7 @@
 import ListGroup from "react-bootstrap/ListGroup";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Stack from "react-bootstrap/Stack";
+import Tooltip from "react-bootstrap/Tooltip";
 
 import { JobCompany } from "../lib/Api";
 import FocusButton from "./FocusButton";
@@ -20,6 +22,13 @@ function CompanyList(props: CompanyListProps) {
             <Stack direction="horizontal" gap={3} className={`${c.hidden && "opacity-25"}`}>
               <div>
                 {c.name} ({c.jobCount})
+                {c.notes &&
+                  <span className="px-2">
+                    <OverlayTrigger placement="right" overlay={<Tooltip>{c.notes}</Tooltip>}>
+                      <i className="bi bi-sticky-fill" style={{"color": "orange"}} />
+                    </OverlayTrigger>
+                  </span>
+                }
               </div>
               <div className="ms-auto">
                 <HideButton

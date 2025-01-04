@@ -28,6 +28,7 @@ export interface JobListResponse {
 export interface JobCompany {
   name: string;
   jobCount: number;
+  notes: string | null;
   hidden: boolean;
 }
 

@@ -16,7 +16,7 @@ function HideButton(props: HideButtonProps) {
       disabled={props.disabled}
       data-testid={props.testid}
     >
-      <i className="bi bi-eye-slash" />
+      <i className="bi bi-pencil" />
     </Button>
   );
 }

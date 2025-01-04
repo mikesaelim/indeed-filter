@@ -78,7 +78,7 @@ function JobsPage() {
         </Row>
       </div>
 
-      <JobList jobs={filteredJobs} hideCompany={hideCompany} />
+      <JobList jobs={filteredJobs} companies={companies} hideCompany={hideCompany} />
 
       <Offcanvas show={showSidePanel} onHide={() => setShowSidePanel(false)}>
         <Offcanvas.Header closeButton>

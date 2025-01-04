@@ -137,9 +137,9 @@ const MockApi = {
   },
   listJobCompanies: async () => {
     return [
-      { "name": "Google", "jobCount": 22, "hidden": false },
-      { "name": "Amazon", "jobCount": 14, "hidden": true },
-      { "name": "Deloitte", "jobCount": 9, "hidden": false }
+      { "name": "Google", "jobCount": 22, "notes": null, "hidden": false },
+      { "name": "Amazon", "jobCount": 14, "notes": "seattle is rainy", "hidden": true },
+      { "name": "Deloitte", "jobCount": 9, "notes": "what happened to touche?", "hidden": false }
     ];
   },
   listCompanies: async () => {
