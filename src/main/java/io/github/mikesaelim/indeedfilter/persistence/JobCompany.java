@@ -12,6 +12,8 @@ public interface JobCompany {
 
     Integer getJobCount();
 
+    String getNotes();
+
     @Value("#{target.hidden == 1}")
     Boolean isHidden();
 

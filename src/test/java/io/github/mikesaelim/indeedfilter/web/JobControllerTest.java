@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.hamcrest.Matchers.nullValue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -76,11 +77,13 @@ class JobControllerTest {
                 new JobCompany() {
                     @Override public String getName() { return "Chess.com"; }
                     @Override public Integer getJobCount() { return 8; }
+                    @Override public String getNotes() { return "1. Na3"; }
                     @Override public Boolean isHidden() { return false; }
                 },
                 new JobCompany() {
                     @Override public String getName() { return "Lichess"; }
                     @Override public Integer getJobCount() { return 3; }
+                    @Override public String getNotes() { return null; }
                     @Override public Boolean isHidden() { return true; }
                 }
         ));
@@ -90,9 +93,11 @@ class JobControllerTest {
                 jsonPath("length($)").value(2),
                 jsonPath("$[0].name").value("Chess.com"),
                 jsonPath("$[0].jobCount").value(8),
+                jsonPath("$[0].notes").value("1. Na3"),
                 jsonPath("$[0].hidden").value(false),
                 jsonPath("$[1].name").value("Lichess"),
                 jsonPath("$[1].jobCount").value(3),
+                jsonPath("$[1].notes").value(nullValue()),
                 jsonPath("$[1].hidden").value(true)
         );
     }
