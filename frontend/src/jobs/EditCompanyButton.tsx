@@ -1,13 +1,13 @@
 import { CSSProperties } from "react";
 import Button from "react-bootstrap/Button";
 
-type HideButtonProps = {
+type EditCompanyButtonProps = {
   onClick: () => void;
   disabled: boolean;
   testid?: string;
 };
 
-function HideButton(props: HideButtonProps) {
+function EditCompanyButton(props: EditCompanyButtonProps) {
   return (
     <Button
       variant="light" size="sm"
@@ -16,9 +16,9 @@ function HideButton(props: HideButtonProps) {
       disabled={props.disabled}
       data-testid={props.testid}
     >
-      <i className="bi bi-eye-slash" />
+      <i className="bi bi-pencil" />
     </Button>
   );
 }
 
-export default HideButton;
+export default EditCompanyButton;

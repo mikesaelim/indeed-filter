@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 
 import { ApiContext, Job, JobCompany } from "../lib/Api";
 import CompanyList from "./CompanyList";
+import CompanyModal from "./CompanyModal";
 import JobList from "./JobList";
 
 function JobsPage() {
@@ -13,9 +14,15 @@ function JobsPage() {
   const [totalJobCount, setTotalJobCount] = useState<number | null>(null);
   const [companies, setCompanies] = useState<JobCompany[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [companyFilterQuery, setCompanyFilterQuery] = useState("");
   const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+
   const [showSidePanel, setShowSidePanel] = useState(false);
+
+  const [showCompanyModal, setShowCompanyModal] = useState(false);
+  const [companyModalTarget, setCompanyModalTarget] = useState<JobCompany | null>(null);
+
   const api = useContext(ApiContext);
 
   useEffect(() => {
@@ -49,6 +56,16 @@ function JobsPage() {
 
     api.hideCompany(name)
       .catch(err => console.log(err));
+  }
+
+  function openCompanyModal(company: JobCompany) {
+    setCompanyModalTarget(company);
+    setShowCompanyModal(true);
+  }
+
+  function closeCompanyModal() {
+    setShowCompanyModal(false);
+    setCompanyModalTarget(null);
   }
 
   return (
@@ -87,11 +104,18 @@ function JobsPage() {
         <Offcanvas.Body>
           <CompanyList
             companies={companies}
+            editCompany={openCompanyModal}
             focusCompany={focusCompany}
             hideCompany={hideCompany}
           />
         </Offcanvas.Body>
       </Offcanvas>
+
+      <CompanyModal
+        show={showCompanyModal}
+        company={companyModalTarget}
+        close={closeCompanyModal}
+      />
     </div>
   );
 }

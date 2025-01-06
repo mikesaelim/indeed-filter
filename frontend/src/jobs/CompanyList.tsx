@@ -4,11 +4,13 @@ import Stack from "react-bootstrap/Stack";
 import Tooltip from "react-bootstrap/Tooltip";
 
 import { JobCompany } from "../lib/Api";
+import EditCompanyButton from "./EditCompanyButton";
 import FocusButton from "./FocusButton";
 import HideButton from "./HideButton";
 
 type CompanyListProps = {
   companies: JobCompany[];
+  editCompany: (company: JobCompany) => void;
   focusCompany: (company: string) => void;
   hideCompany: (company: string) => void;
 }
@@ -31,6 +33,10 @@ function CompanyList(props: CompanyListProps) {
                 }
               </div>
               <div className="ms-auto">
+                <EditCompanyButton
+                  onClick={() => props.editCompany(c)}
+                  disabled={c.hidden}
+                />
                 <HideButton
                   onClick={() => props.hideCompany(c.name)}
                   disabled={c.hidden}
