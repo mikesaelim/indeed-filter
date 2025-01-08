@@ -23,7 +23,11 @@ public interface JobRepository extends JpaRepository<Job, String> {
                        FROM jobs
                        GROUP BY name
                        ORDER BY jobCount DESC, name ASC)
-                    SELECT job_companies.*, companies.notes, COALESCE(companies.hidden, FALSE) AS hidden
+                    SELECT
+                        job_companies.*,
+                        companies.id,
+                        companies.notes,
+                        COALESCE(companies.hidden, FALSE) AS hidden
                     FROM job_companies
                     LEFT JOIN companies ON job_companies.name=companies.name
                     """)

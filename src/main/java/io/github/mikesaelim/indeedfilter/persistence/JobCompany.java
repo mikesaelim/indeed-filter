@@ -12,6 +12,10 @@ public interface JobCompany {
 
     Integer getJobCount();
 
+    // Only non-null if the company has a row in the companies table
+    Integer getId();
+
+    // Only non-null if the company has a row in the companies table
     String getNotes();
 
     @Value("#{target.hidden == 1}")
