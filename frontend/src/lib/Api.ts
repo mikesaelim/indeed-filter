@@ -28,6 +28,7 @@ export interface JobListResponse {
 export interface JobCompany {
   name: string;
   jobCount: number;
+  id: number | null;
   notes: string | null;
   hidden: boolean;
 }
@@ -39,12 +40,21 @@ export interface Company {
   hidden: boolean;
 }
 
+export interface CompanyData {
+  name?: string;
+  notes?: string;
+  hidden?: boolean;
+}
+
 export interface Api {
   listJobs: () => Promise<JobListResponse>;
   listJobCompanies: () => Promise<JobCompany[]>;
   listCompanies: () => Promise<Company[]>;
   hideCompany: (name: string) => Promise<Company>;
   unhideCompany: (id: number) => Promise<void>;
+  createCompany: (company: CompanyData) => Promise<Company>;
+  updateCompany: (id: number, company: CompanyData) => Promise<Company>;
+  deleteCompany: (id: number) => Promise<void>;
 }
 
 export const ApiContext = createContext<Api>(MockApi);

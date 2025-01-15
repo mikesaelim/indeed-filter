@@ -1,5 +1,7 @@
+import { Company, CompanyData, JobCompany, JobListResponse } from "./Api";
+
 const RealApi = {
-  listJobs: async () => {
+  listJobs: async (): Promise<JobListResponse> => {
     return fetch("/api/jobs")
       .then(response => {
         if (!response.ok) {
@@ -8,7 +10,7 @@ const RealApi = {
         return response.json();
       });
   },
-  listJobCompanies: async () => {
+  listJobCompanies: async (): Promise<JobCompany[]> => {
     return fetch("/api/jobs/companies")
       .then(response => {
         if (!response.ok) {
@@ -17,7 +19,7 @@ const RealApi = {
         return response.json();
       });
   },
-  listCompanies: async () => {
+  listCompanies: async (): Promise<Company[]> => {
     return fetch("/api/companies")
       .then(response => {
         if (!response.ok) {
@@ -26,7 +28,7 @@ const RealApi = {
         return response.json();
       });
   },
-  hideCompany: async (name: string) => {
+  hideCompany: async (name: string): Promise<Company> => {
     return fetch("/api/companies", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,14 +40,46 @@ const RealApi = {
       return response.json();
     });
   },
-  unhideCompany: async (id: number) => {
+  unhideCompany: async (id: number): Promise<void> => {
     return fetch("/api/companies/" + id, { method: "DELETE" })
       .then(response => {
         if (!response.ok) {
           throw new Error("Response was " + response.status);
         }
       });
-  }
+  },
+  createCompany: async (company: CompanyData): Promise<Company> => {
+    return fetch("/api/companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(company),
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error("Response was " + response.status);
+      }
+      return response.json();
+    });
+  },
+  updateCompany: async (id: number, company: CompanyData): Promise<Company> => {
+    return fetch("/api/companies/" + id, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json"},
+      body: JSON.stringify(company),
+    }).then(response => {
+      if (!response.ok) {
+        throw new Error("Response was " + response.status);
+      }
+      return response.json();
+    });
+  },
+  deleteCompany: async (id: number): Promise<void> => {
+    return fetch("/api/companies/" + id, { method: "DELETE" })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+      });
+  },
 };
 
 export default RealApi;

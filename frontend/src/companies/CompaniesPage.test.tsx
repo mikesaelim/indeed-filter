@@ -12,7 +12,10 @@ const createMockApi = () => ({
     { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
   ]),
   hideCompany: jest.fn(),
-  unhideCompany: jest.fn()
+  unhideCompany: jest.fn(),
+  createCompany: jest.fn(),
+  updateCompany: jest.fn(),
+  deleteCompany: jest.fn(),
 });
 
 describe("CompaniesPage", () => {

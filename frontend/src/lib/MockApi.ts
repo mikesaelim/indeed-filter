@@ -1,6 +1,8 @@
+import { Company, CompanyData, JobCompany, JobListResponse } from "./Api";
+
 // For local development with npm start
 const MockApi = {
-  listJobs: async () => {
+  listJobs: async (): Promise<JobListResponse> => {
     return {
       "totalCount": 782,
       "jobs": [
@@ -135,26 +137,37 @@ const MockApi = {
       ]
     };
   },
-  listJobCompanies: async () => {
+  listJobCompanies: async (): Promise<JobCompany[]> => {
     return [
-      { "name": "Google", "jobCount": 22, "notes": null, "hidden": false },
-      { "name": "Amazon", "jobCount": 14, "notes": "seattle is rainy", "hidden": true },
-      { "name": "Deloitte", "jobCount": 9, "notes": "what happened to touche?", "hidden": false }
+      { "name": "Google", "jobCount": 22, "id": null, "notes": null, "hidden": false },
+      { "name": "Amazon", "jobCount": 14, "id": 155, "notes": "seattle is rainy", "hidden": true },
+      { "name": "Deloitte", "jobCount": 9, "id": 73, "notes": "what happened to touche?", "hidden": false }
     ];
   },
-  listCompanies: async () => {
+  listCompanies: async (): Promise<Company[]> => {
     return [
       { "id": 14, "name": "Citadel", "notes": null, "hidden": true },
       { "id": 5, "name": "Palantir", "notes": "eww", "hidden": true },
       { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
     ];
   },
-  hideCompany: async (name: string) => {
+  hideCompany: async (name: string): Promise<Company> => {
     alert(`Company ${name} is hidden!`);
     return { "id": 23, "name": name, "notes": null, "hidden": true };
   },
-  unhideCompany: async (id: number) => {
+  unhideCompany: async (id: number): Promise<void> => {
     alert(`Company ${id} is unhidden!`);
+  },
+  createCompany: async (company: CompanyData): Promise<Company> => {
+    alert(`Created record for company ${company.name} \n  Hidden: ${company.hidden} \n  Notes: ${company.notes}`);
+    return { "id": 23, "name": company.name!, "notes": company.notes ?? null, "hidden": company.hidden ?? false };
+  },
+  updateCompany: async (id: number, company: CompanyData): Promise<Company> => {
+    alert(`Updated record for company ${id} with ${JSON.stringify(company)}`);
+    return { "id": id, "name": "(Updated company)", "notes": company.notes ?? null, "hidden": company.hidden ?? false };
+  },
+  deleteCompany: async (id: number): Promise<void> => {
+    alert(`Deleted record for company ${id}`);
   }
 };
 

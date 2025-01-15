@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-import { JobCompany } from "../lib/Api";
+import { ApiContext, CompanyData, JobCompany } from "../lib/Api";
 
 type CompanyModalProps = {
   show: boolean;
@@ -13,6 +13,7 @@ type CompanyModalProps = {
 
 function CompanyModal(props: CompanyModalProps) {
   const [notes, setNotes] = useState<string>("");
+  const api = useContext(ApiContext);
 
   useEffect(() => {
     setNotes(props.company?.notes || "");
@@ -20,6 +21,22 @@ function CompanyModal(props: CompanyModalProps) {
 
   if (!props.company) {
     return <></>;
+  }
+
+  async function save(hide: boolean) {
+    const payload: CompanyData = { notes: notes };
+    if (hide) {
+      payload.hidden = true;
+    }
+
+    if (props.company?.id) {
+      await api.updateCompany(props.company.id, payload);
+    } else {
+      payload.name = props.company?.name;
+      await api.createCompany(payload);
+    }
+    // TODO updating local companies state
+    props.close();
   }
 
   return (
@@ -45,10 +62,10 @@ function CompanyModal(props: CompanyModalProps) {
         <Button variant="secondary" onClick={props.close}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={props.close}>
+        <Button variant="primary" onClick={() => save(false)}>
           Save
         </Button>
-        <Button variant="danger" onClick={props.close}>
+        <Button variant="danger" onClick={() => save(true)}>
           Save + Hide
         </Button>
       </Modal.Footer>

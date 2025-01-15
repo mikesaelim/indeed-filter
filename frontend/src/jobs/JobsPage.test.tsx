@@ -14,13 +14,16 @@ const createMockApi = () => ({
     ]
   }),
   listJobCompanies: async () => [
-    {"name": "Sarpino's", "jobCount": 2, "notes": "bleh", "hidden": false},
-    {"name": "Connie's Pizza", "jobCount": 1, "notes": "", "hidden": false},
-    {"name": "Wrigley's", "jobCount": 1, "notes": null, "hidden": false}
+    {"name": "Sarpino's", "jobCount": 2, "id": 4, "notes": "bleh", "hidden": false},
+    {"name": "Connie's Pizza", "jobCount": 1, "id": 5, "notes": "", "hidden": false},
+    {"name": "Wrigley's", "jobCount": 1, "id": null, "notes": null, "hidden": false}
   ],
   listCompanies: jest.fn(),
   hideCompany: jest.fn(),
-  unhideCompany: jest.fn()
+  unhideCompany: jest.fn(),
+  createCompany: jest.fn(),
+  updateCompany: jest.fn(),
+  deleteCompany: jest.fn(),
 });
 
 describe("JobsPage", () => {
