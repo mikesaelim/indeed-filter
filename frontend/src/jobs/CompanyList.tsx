@@ -1,12 +1,11 @@
 import ListGroup from "react-bootstrap/ListGroup";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Stack from "react-bootstrap/Stack";
-import Tooltip from "react-bootstrap/Tooltip";
 
+import EditCompanyButton from "../components/EditCompanyButton";
+import FocusButton from "../components/FocusButton";
+import HideButton from "../components/HideButton";
+import NotesPopover from "../components/NotesPopover";
 import { JobCompany } from "../lib/Api";
-import EditCompanyButton from "./EditCompanyButton";
-import FocusButton from "./FocusButton";
-import HideButton from "./HideButton";
 
 type CompanyListProps = {
   companies: JobCompany[];
@@ -26,9 +25,7 @@ function CompanyList(props: CompanyListProps) {
                 {c.name} ({c.jobCount})
                 {c.notes &&
                   <span className="px-2">
-                    <OverlayTrigger placement="right" overlay={<Tooltip>{c.notes}</Tooltip>}>
-                      <i className="bi bi-sticky-fill" style={{"color": "orange"}} />
-                    </OverlayTrigger>
+                    <NotesPopover notes={c.notes} />
                   </span>
                 }
               </div>

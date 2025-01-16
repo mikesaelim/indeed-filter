@@ -1,14 +1,13 @@
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
-import Tooltip from "react-bootstrap/Tooltip";
 
 import "./JobList.css";
-import {Job, JobCompany} from "../lib/Api";
-import HideButton from "./HideButton";
-import TimeAgo from "./TimeAgo";
+import HideButton from "../components/HideButton";
+import NotesPopover from "../components/NotesPopover";
+import TimeAgo from "../components/TimeAgo";
+import { Job, JobCompany } from "../lib/Api";
 
 type JobListProps = {
   jobs: Job[];
@@ -59,9 +58,7 @@ function JobCard(props: JobCardProps) {
           {j.company}
           {props.company?.notes &&
             <span className="px-2">
-              <OverlayTrigger placement="right" overlay={<Tooltip>{props.company.notes}</Tooltip>}>
-                <i className="bi bi-sticky-fill" style={{"color": "orange"}} />
-              </OverlayTrigger>
+              <NotesPopover notes={props.company.notes} />
             </span>
           }
         </Card.Subtitle>
