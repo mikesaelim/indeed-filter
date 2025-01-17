@@ -164,6 +164,7 @@ const MockApi = {
   },
   updateCompany: async (id: number, company: CompanyData): Promise<Company> => {
     alert(`Updated record for company ${id} with ${JSON.stringify(company)}`);
+    // This won't behave like production because we can't return the name of the company
     return { "id": id, "name": "(Updated company)", "notes": company.notes ?? null, "hidden": company.hidden ?? false };
   },
   deleteCompany: async (id: number): Promise<void> => {

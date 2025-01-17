@@ -3,11 +3,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
-import { ApiContext, CompanyData, JobCompany } from "../lib/Api";
+import { ApiContext, Company, CompanyData, JobCompany } from "../lib/Api";
 
 type CompanyModalProps = {
   show: boolean;
   company: JobCompany | null;
+  updateCompany: (company: Company) => void;
   close: () => void;
 }
 
@@ -29,13 +30,17 @@ function CompanyModal(props: CompanyModalProps) {
       payload.hidden = true;
     }
 
+    let promise;
     if (props.company?.id) {
-      await api.updateCompany(props.company.id, payload);
+      promise = api.updateCompany(props.company.id, payload);
     } else {
       payload.name = props.company?.name;
-      await api.createCompany(payload);
+      promise = api.createCompany(payload);
     }
-    // TODO updating local companies state
+    promise
+      .then(savedCompany => props.updateCompany(savedCompany))
+      .catch(err => console.log(err));
+
     props.close();
   }
 

@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
 
-import { ApiContext, Job, JobCompany } from "../lib/Api";
+import { ApiContext, Company, Job, JobCompany } from "../lib/Api";
 import CompanyList from "./CompanyList";
 import CompanyModal from "./CompanyModal";
 import JobList from "./JobList";
@@ -56,6 +56,16 @@ function JobsPage() {
 
     api.hideCompany(name)
       .catch(err => console.log(err));
+  }
+
+  function updateCompany(company: Company) {
+    const newCompanies = companies.map(c => (c.name === company.name) ?
+      {...c, id: company.id, notes: company.notes, hidden: company.hidden} : c);
+    setCompanies(newCompanies);
+    if (company.hidden) {
+      const newJobs = jobs.map(job => (job.company === company.name) ? { ...job, hidden: true} : job);
+      setJobs(newJobs);
+    }
   }
 
   function openCompanyModal(company: JobCompany) {
@@ -114,6 +124,7 @@ function JobsPage() {
       <CompanyModal
         show={showCompanyModal}
         company={companyModalTarget}
+        updateCompany={updateCompany}
         close={closeCompanyModal}
       />
     </div>
