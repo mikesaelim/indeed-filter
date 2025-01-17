@@ -43,21 +43,6 @@ function JobsPage() {
     setFilteredJobs(jobs.filter(job => job.company.toLowerCase().includes(lowercaseQuery)));
   }, [jobs, companyFilterQuery]);
 
-  function focusCompany(name: string) {
-    setCompanyFilterQuery(name);
-    setShowSidePanel(false);
-  }
-
-  function hideCompany(name: string) {
-    const newJobs = jobs.map(job => (job.company === name) ? {...job, hidden: true} : job);
-    setJobs(newJobs);
-    const newCompanies = companies.map(c => (c.name === name) ? {...c, hidden: true} : c);
-    setCompanies(newCompanies);
-
-    api.hideCompany(name)
-      .catch(err => console.log(err));
-  }
-
   function updateCompany(company: Company) {
     const newCompanies = companies.map(c => (c.name === company.name) ?
       {...c, id: company.id, notes: company.notes, hidden: company.hidden} : c);
@@ -66,6 +51,11 @@ function JobsPage() {
       const newJobs = jobs.map(job => (job.company === company.name) ? { ...job, hidden: true} : job);
       setJobs(newJobs);
     }
+  }
+
+  function focusCompany(name: string) {
+    setCompanyFilterQuery(name);
+    setShowSidePanel(false);
   }
 
   function openCompanyModal(company: JobCompany) {
@@ -105,7 +95,7 @@ function JobsPage() {
         </Row>
       </div>
 
-      <JobList jobs={filteredJobs} companies={companies} hideCompany={hideCompany} />
+      <JobList jobs={filteredJobs} companies={companies} editCompany={openCompanyModal} />
 
       <Offcanvas show={showSidePanel} onHide={() => setShowSidePanel(false)}>
         <Offcanvas.Header closeButton>
@@ -116,7 +106,6 @@ function JobsPage() {
             companies={companies}
             editCompany={openCompanyModal}
             focusCompany={focusCompany}
-            hideCompany={hideCompany}
           />
         </Offcanvas.Body>
       </Offcanvas>

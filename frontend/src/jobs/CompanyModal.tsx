@@ -63,15 +63,17 @@ function CompanyModal(props: CompanyModalProps) {
           </Form.Group>
         </Form>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer className="justify-content-between">
         <Button variant="secondary" onClick={props.close}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={() => save(false)}>
+        <Button variant="primary" className="px-4" onClick={() => save(false)}>
           Save
         </Button>
         <Button variant="danger" onClick={() => save(true)}>
           Save + Hide
+          &nbsp;
+          <i className="bi bi-eye-slash"/>
         </Button>
       </Modal.Footer>
     </Modal>

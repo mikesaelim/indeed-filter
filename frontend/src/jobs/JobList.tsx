@@ -4,7 +4,7 @@ import Row from "react-bootstrap/Row";
 import Stack from "react-bootstrap/Stack";
 
 import "./JobList.css";
-import HideButton from "../components/HideButton";
+import EditCompanyButton from "../components/EditCompanyButton";
 import NotesPopover from "../components/NotesPopover";
 import TimeAgo from "../components/TimeAgo";
 import { Job, JobCompany } from "../lib/Api";
@@ -12,7 +12,7 @@ import { Job, JobCompany } from "../lib/Api";
 type JobListProps = {
   jobs: Job[];
   companies: JobCompany[];
-  hideCompany: (company: string) => void;
+  editCompany: (company: JobCompany) => void;
 };
 
 function JobList(props: JobListProps) {
@@ -22,15 +22,24 @@ function JobList(props: JobListProps) {
     <div className="jobs my-2 mx-auto">
       <Row xs={1} md={2} className="g-4">
         {
-          props.jobs.map(job => (
-            <Col key={job.jobkey}>
-              <JobCard
-                job={job}
-                company={companyMap.get(job.company)}
-                hideCompany={() => props.hideCompany(job.company)}
-              />
-            </Col>
-          ))
+          props.jobs.map(job => {
+            const company: JobCompany | undefined = companyMap.get(job.company);
+            return (
+              <Col key={job.jobkey}>
+                <JobCard
+                  job={job}
+                  company={company}
+                  editCompany={() => {
+                    if (company) {
+                      props.editCompany(company);
+                    } else {
+                      console.log(`Error: Cannot find JobCompany with name ${job.company}!`);
+                    }
+                  }}
+                />
+              </Col>
+            );
+          })
         }
       </Row>
     </div>
@@ -40,7 +49,7 @@ function JobList(props: JobListProps) {
 type JobCardProps = {
   job: Job;
   company?: JobCompany;
-  hideCompany: () => void;
+  editCompany: () => void;
 }
 
 function JobCard(props: JobCardProps) {
@@ -71,10 +80,10 @@ function JobCard(props: JobCardProps) {
             </small>
           </div>
           <div className="ms-auto">
-            <HideButton
-              onClick={props.hideCompany}
+            <EditCompanyButton
+              onClick={props.editCompany}
               disabled={j.hidden || false}
-              testid={`hide-job-${j.jobkey}`}
+              testid={`edit-job-${j.jobkey}`}
             />
           </div>
         </Stack>
