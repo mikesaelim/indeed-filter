@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
 import JobsPage from "./JobsPage";
 import { ApiContext } from "../lib/Api";
 
@@ -19,8 +20,6 @@ const createMockApi = () => ({
     {"name": "Wrigley's", "jobCount": 1, "id": null, "notes": null, "hidden": false}
   ],
   listCompanies: jest.fn(),
-  hideCompany: jest.fn(), // TODO remove
-  unhideCompany: jest.fn(), // TODO remove
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
   deleteCompany: jest.fn(),
@@ -40,10 +39,27 @@ describe("JobsPage", () => {
     expect(screen.getByText("Influencer")).toBeInTheDocument();
   });
 
-  // TODO write tests for opening the edit modal, saving, and hiding
-  test.skip("when the hide button is clicked, hides all jobs from that company", async () => {
+  test("displays notes for companies", async () => {
+    const user = userEvent.setup();
+    render(
+      <ApiContext.Provider value={createMockApi()}>
+        <JobsPage />
+      </ApiContext.Provider>
+    );
+
+    await screen.findByText("Something Engineer");
+    expect(screen.queryByTestId("notes-a1")).toBeNull();
+    expect(screen.getByTestId("notes-b2")).toBeInTheDocument();
+    expect(screen.queryByTestId("notes-c3")).toBeNull();
+    expect(screen.getByTestId("notes-d4")).toBeInTheDocument();
+
+    await user.hover(screen.getByTestId("notes-d4"));
+    expect(await screen.findByText("bleh")).toBeInTheDocument();
+  });
+
+  test("when the edit button is clicked, allows saving a note and hiding a company", async () => {
     const mockApi = createMockApi();
-    mockApi.hideCompany.mockResolvedValue(null);
+    mockApi.createCompany.mockResolvedValue({ id: 12, name: "Wrigley's", notes: "foo", hidden: true });
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>
@@ -52,21 +68,45 @@ describe("JobsPage", () => {
     );
 
     await screen.findByText("Something Engineer");
-    await user.click(screen.getByTestId("hide-job-a1"));
-    expect(screen.getByTestId("card-a1")).toHaveClass("opacity-25");
-    ["card-b2", "card-c3", "card-d4"].forEach(testid => {
+    await user.click(screen.getByTestId("edit-job-c3"));
+
+    await screen.findByText("Edit Wrigley's");
+    const input = await screen.findByRole("textbox");
+    await user.type(input, "foo");
+    await user.click(screen.getByText("Save + Hide", { selector: "button" }));
+
+    expect(screen.getByTestId("card-c3")).toHaveClass("opacity-25");
+    ["card-a1", "card-b2", "card-d4"].forEach(testid => {
       expect(screen.getByTestId(testid)).not.toHaveClass("opacity-25");
     });
-    expect(mockApi.hideCompany.mock.calls.length).toBe(1);
-    expect(mockApi.hideCompany.mock.calls[0][0]).toEqual("Connie's Pizza");
+    expect(mockApi.createCompany.mock.calls.length).toBe(1);
+    expect(mockApi.createCompany.mock.calls[0][0]).toEqual({ name: "Wrigley's", notes: "foo", hidden: true });
+  });
 
-    // both Sarpino's jobs listings should be hidden
-    await user.click(screen.getByTestId("hide-job-d4"));
-    ["card-a1", "card-b2", "card-d4"].forEach(testid => {
-      expect(screen.getByTestId(testid)).toHaveClass("opacity-25");
-    });
-    expect(screen.getByTestId("card-c3")).not.toHaveClass("opacity-25");
-    expect(mockApi.hideCompany.mock.calls.length).toBe(2);
-    expect(mockApi.hideCompany.mock.calls[1][0]).toEqual("Sarpino's");
+  test("when the edit button is clicked, allows updating a note", async () => {
+    const mockApi = createMockApi();
+    mockApi.updateCompany.mockResolvedValue({ id: 4, name: "Sarpino's", notes: "bleh worst pizza", hidden: false });
+    const user = userEvent.setup();
+    render(
+      <ApiContext.Provider value={mockApi}>
+        <JobsPage />
+      </ApiContext.Provider>
+    );
+
+    await screen.findByText("Something Engineer");
+    await user.click(screen.getByTestId("edit-job-b2"));
+
+    await screen.findByText("Edit Sarpino's");
+    const input = await screen.findByRole("textbox");
+    expect(input).toHaveValue("bleh");
+    await user.type(input, " worst pizza");
+    await user.click(screen.getByText("Save", { selector: "button" }));
+
+    await user.hover(screen.getByTestId("notes-b2"));
+    expect(await screen.findByText("bleh worst pizza")).toBeInTheDocument();
+
+    expect(mockApi.updateCompany.mock.calls.length).toBe(1);
+    expect(mockApi.updateCompany.mock.calls[0][0]).toEqual(4);
+    expect(mockApi.updateCompany.mock.calls[0][1]).toEqual({ notes: "bleh worst pizza" });
   });
 });

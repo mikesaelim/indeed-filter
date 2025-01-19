@@ -67,7 +67,7 @@ function JobCard(props: JobCardProps) {
           {j.company}
           {props.company?.notes &&
             <span className="px-2">
-              <NotesPopover notes={props.company.notes} />
+              <NotesPopover notes={props.company.notes} testid={`notes-${j.jobkey}`} />
             </span>
           }
         </Card.Subtitle>
