@@ -11,8 +11,6 @@ const createMockApi = () => ({
     { "id": 5, "name": "Palantir", "notes": "eww", "hidden": true },
     { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
   ]),
-  hideCompany: jest.fn(),
-  unhideCompany: jest.fn(),
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
   deleteCompany: jest.fn(),
@@ -28,12 +26,12 @@ describe("CompaniesPage", () => {
 
     expect(await screen.findByText("Citadel")).toBeInTheDocument();
     expect(screen.getByText("Palantir")).toBeInTheDocument();
-    expect(screen.queryByText("Twitter")).not.toBeInTheDocument();
+    expect(screen.getByText("Twitter")).toBeInTheDocument();
   });
 
   test("calls the api to hide a company", async () => {
     const mockApi = createMockApi();
-    mockApi.hideCompany.mockResolvedValue(null);
+    mockApi.createCompany.mockResolvedValue(null);
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>
@@ -45,13 +43,13 @@ describe("CompaniesPage", () => {
     await user.type(input, "Comcast");
     await user.click(screen.getByText("Hide", { selector: "button" }));
     expect(input).toHaveValue("");
-    expect(mockApi.hideCompany.mock.calls.length).toBe(1);
-    expect(mockApi.hideCompany.mock.calls[0][0]).toEqual("Comcast");
+    expect(mockApi.createCompany.mock.calls.length).toBe(1);
+    expect(mockApi.createCompany.mock.calls[0][0]).toEqual({ name: "Comcast", hidden: true });
   });
 
   test("calls the api to unhide a company", async () => {
     const mockApi = createMockApi();
-    mockApi.unhideCompany.mockResolvedValue(null);
+    mockApi.updateCompany.mockResolvedValue(null);
     const user = userEvent.setup();
     render(
       <ApiContext.Provider value={mockApi}>
@@ -61,7 +59,8 @@ describe("CompaniesPage", () => {
 
     await user.click(await screen.findByText("Citadel"));
     await user.click(screen.getAllByText("Unhide!", { selector: "button" })[0]);
-    expect(mockApi.unhideCompany.mock.calls.length).toBe(1);
-    expect(mockApi.unhideCompany.mock.calls[0][0]).toEqual(14);
+    expect(mockApi.updateCompany.mock.calls.length).toBe(1);
+    expect(mockApi.updateCompany.mock.calls[0][0]).toEqual(14);
+    expect(mockApi.updateCompany.mock.calls[0][1]).toEqual({ hidden: false });
   });
 });

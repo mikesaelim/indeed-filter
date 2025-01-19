@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import "./CompaniesPage.css";
+import NotesPopover from "../components/NotesPopover";
 import { ApiContext, Company } from "../lib/Api";
 
 function CompaniesPage() {
@@ -18,7 +19,7 @@ function CompaniesPage() {
 
   function loadCompanies() {
     api.listCompanies()
-      .then(results => setCompanies(results.filter(c => c.hidden)))
+      .then(results => setCompanies(results))
       .catch(err => console.log(err));
   }
 
@@ -27,14 +28,14 @@ function CompaniesPage() {
     if (newCompanyName == null || newCompanyName.trim() === "") {
       return;
     }
-    api.hideCompany(newCompanyName.trim())
+    api.createCompany({ name: newCompanyName, hidden: true })
       .then(loadCompanies)
       .then(() => setNewCompanyName(""))
       .catch(err => console.log(err));
   }
 
   function unhideCompany(id: number) {
-    api.unhideCompany(id)
+    api.updateCompany(id, { hidden: false })
       .then(loadCompanies)
       .catch(err => console.log(err));
   }
@@ -52,9 +53,28 @@ function CompaniesPage() {
                 {
                   companies.map(c => (
                     <Accordion.Item eventKey={c.id.toString()} key={c.id}>
-                      <Accordion.Header>{c.name}</Accordion.Header>
+                      <Accordion.Header>
+                        {c.name}
+                        <span className="px-1"/>
+                        {c.notes &&
+                          <span className="px-1">
+                            <NotesPopover notes={c.notes} />
+                          </span>
+                        }
+                        {c.hidden &&
+                          <span className="px-1">
+                            <i className="bi bi-eye-slash"/>
+                          </span>
+                        }
+                      </Accordion.Header>
                       <Accordion.Body>
-                        <Button variant="danger" size="sm" className="mx-2" onClick={() => unhideCompany(c.id)}>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          className="mx-2"
+                          onClick={() => unhideCompany(c.id)}
+                          disabled={!c.hidden}
+                        >
                           Unhide!
                         </Button>
                       </Accordion.Body>

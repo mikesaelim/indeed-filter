@@ -28,26 +28,6 @@ const RealApi = {
         return response.json();
       });
   },
-  hideCompany: async (name: string): Promise<Company> => {
-    return fetch("/api/companies", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ "name": name, "hidden": true }),
-    }).then(response => {
-      if (!response.ok) {
-        throw new Error("Response was " + response.status);
-      }
-      return response.json();
-    });
-  },
-  unhideCompany: async (id: number): Promise<void> => {
-    return fetch("/api/companies/" + id, { method: "DELETE" })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Response was " + response.status);
-        }
-      });
-  },
   createCompany: async (company: CompanyData): Promise<Company> => {
     return fetch("/api/companies", {
       method: "POST",

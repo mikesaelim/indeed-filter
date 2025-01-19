@@ -148,15 +148,8 @@ const MockApi = {
     return [
       { "id": 14, "name": "Citadel", "notes": null, "hidden": true },
       { "id": 5, "name": "Palantir", "notes": "eww", "hidden": true },
-      { "id": 8, "name": "Twitter", "notes": null, "hidden": false }
+      { "id": 8, "name": "Twitter", "notes": "nope", "hidden": false }
     ];
-  },
-  hideCompany: async (name: string): Promise<Company> => {
-    alert(`Company ${name} is hidden!`);
-    return { "id": 23, "name": name, "notes": null, "hidden": true };
-  },
-  unhideCompany: async (id: number): Promise<void> => {
-    alert(`Company ${id} is unhidden!`);
   },
   createCompany: async (company: CompanyData): Promise<Company> => {
     alert(`Created record for company ${company.name} \n  Hidden: ${company.hidden} \n  Notes: ${company.notes}`);

@@ -50,8 +50,6 @@ export interface Api {
   listJobs: () => Promise<JobListResponse>;
   listJobCompanies: () => Promise<JobCompany[]>;
   listCompanies: () => Promise<Company[]>;
-  hideCompany: (name: string) => Promise<Company>;
-  unhideCompany: (id: number) => Promise<void>;
   createCompany: (company: CompanyData) => Promise<Company>;
   updateCompany: (id: number, company: CompanyData) => Promise<Company>;
   deleteCompany: (id: number) => Promise<void>;

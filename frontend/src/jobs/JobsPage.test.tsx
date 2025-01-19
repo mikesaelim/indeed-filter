@@ -19,8 +19,8 @@ const createMockApi = () => ({
     {"name": "Wrigley's", "jobCount": 1, "id": null, "notes": null, "hidden": false}
   ],
   listCompanies: jest.fn(),
-  hideCompany: jest.fn(),
-  unhideCompany: jest.fn(),
+  hideCompany: jest.fn(), // TODO remove
+  unhideCompany: jest.fn(), // TODO remove
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
   deleteCompany: jest.fn(),
