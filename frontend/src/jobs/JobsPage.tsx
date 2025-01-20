@@ -4,7 +4,8 @@ import Form from "react-bootstrap/Form";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Row from "react-bootstrap/Row";
 
-import { ApiContext, Company, Job, JobCompany } from "../lib/Api";
+import LastRunTooltip from "../components/LastRunTooltip";
+import { ApiContext, Company, Job, JobCompany, Run } from "../lib/Api";
 import CompanyList from "./CompanyList";
 import CompanyModal from "./CompanyModal";
 import JobList from "./JobList";
@@ -13,6 +14,7 @@ function JobsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [totalJobCount, setTotalJobCount] = useState<number | null>(null);
   const [companies, setCompanies] = useState<JobCompany[]>([]);
+  const [lastRun, setLastRun] = useState<Run | null>(null);
   const [loading, setLoading] = useState(true);
 
   const [companyFilterQuery, setCompanyFilterQuery] = useState("");
@@ -35,6 +37,9 @@ function JobsPage() {
       .finally(() => setLoading(false));
     api.listJobCompanies()
       .then(results => setCompanies(results))
+      .catch(err => console.log(err));
+    api.getLastRun()
+      .then(result => setLastRun(result))
       .catch(err => console.log(err));
   }, [api]);
 
@@ -80,6 +85,9 @@ function JobsPage() {
                 Showing {jobs.length} of {totalJobCount} jobs from&nbsp;
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a href="#" onClick={() => setShowSidePanel(true)}>{companies.length} companies</a>
+                <span className="px-3">
+                  <LastRunTooltip lastRun={lastRun} />
+                </span>
               </h4>
             }
           </Col>

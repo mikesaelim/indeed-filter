@@ -1,4 +1,4 @@
-import { Company, CompanyData, JobCompany, JobListResponse } from "./Api";
+import { Company, CompanyData, JobCompany, JobListResponse, Run } from "./Api";
 
 // For local development with npm start
 const MockApi = {
@@ -162,7 +162,10 @@ const MockApi = {
   },
   deleteCompany: async (id: number): Promise<void> => {
     alert(`Deleted record for company ${id}`);
-  }
+  },
+  getLastRun: async (): Promise<Run> => {
+    return { "id": 8, "completedAt": "2025-01-20T11:18:25Z", "searchUrl": "https://something.com", "success": true };
+  },
 };
 
 export default MockApi;

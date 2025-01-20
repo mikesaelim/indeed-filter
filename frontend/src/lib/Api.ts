@@ -46,6 +46,13 @@ export interface CompanyData {
   hidden?: boolean;
 }
 
+export interface Run {
+  id: number;
+  completedAt: string;
+  searchUrl: string;
+  success: boolean;
+}
+
 export interface Api {
   listJobs: () => Promise<JobListResponse>;
   listJobCompanies: () => Promise<JobCompany[]>;
@@ -53,6 +60,7 @@ export interface Api {
   createCompany: (company: CompanyData) => Promise<Company>;
   updateCompany: (id: number, company: CompanyData) => Promise<Company>;
   deleteCompany: (id: number) => Promise<void>;
+  getLastRun: () => Promise<Run>;
 }
 
 export const ApiContext = createContext<Api>(MockApi);

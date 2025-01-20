@@ -1,4 +1,4 @@
-import { Company, CompanyData, JobCompany, JobListResponse } from "./Api";
+import { Company, CompanyData, JobCompany, JobListResponse, Run } from "./Api";
 
 const RealApi = {
   listJobs: async (): Promise<JobListResponse> => {
@@ -58,6 +58,15 @@ const RealApi = {
         if (!response.ok) {
           throw new Error("Response was " + response.status);
         }
+      });
+  },
+  getLastRun: async (): Promise<Run> => {
+    return fetch("/api/runs/last")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Response was " + response.status);
+        }
+        return response.json();
       });
   },
 };

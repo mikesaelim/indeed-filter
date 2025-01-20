@@ -23,6 +23,7 @@ const createMockApi = () => ({
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
   deleteCompany: jest.fn(),
+  getLastRun: async () => ({"id": 8, "completedAt": "2025-01-20T11:18:25Z", "searchUrl": "whatever", "success": true}),
 });
 
 describe("JobsPage", () => {

@@ -14,6 +14,7 @@ const createMockApi = () => ({
   createCompany: jest.fn(),
   updateCompany: jest.fn(),
   deleteCompany: jest.fn(),
+  getLastRun: jest.fn(),
 });
 
 describe("CompaniesPage", () => {
